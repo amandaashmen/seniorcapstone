@@ -1,7 +1,8 @@
 #LED file
 
-import tkinter as tkinter
-import tkinter.font
+#from tkinter import *
+import tkinter as tk
+#import tkinter.font
 from gpiozero import LED
 
 win=tk.TK()
