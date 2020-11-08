@@ -55,8 +55,8 @@ def convert_V_to_T(V):
     f = c*(9/5) + 32                            # degrees fahrenheit
 
     #print formatting
-    print('{:.3f}'.format(c) + "°C")
-    print('{:.3f}'.format(f) + "°F")
+    print('{:.3f}'.format(c) + "C")
+    print('{:.3f}'.format(f) + "F")
 
     return(f)
 
@@ -75,9 +75,9 @@ def remap_range(value, left_min, left_max, right_min, right_max):
 def graphData(dataList, timeList):
     # creates csv file to write data to
     filename = 'temp.csv'
-        with open(filename, mode='w', newline= '') as data:
+    with open(filename, mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
-            tempData.writerow(["Time    Temperature")])
+            tempData.writerow(["Time    Temperature"])
 
     for point in range(len(dataList)):
         temp = dataList[point]
@@ -85,7 +85,7 @@ def graphData(dataList, timeList):
 
         xList.append(temp)
         yList.append(time)
-        tempData.writerow([time     temp])
+        tempData.writerow([time, temp])
 
     evalAxis = np.linspace(0, time.time(), min(map(len, runList))-1)
 
