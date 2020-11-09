@@ -131,7 +131,6 @@ while True:
         #f = convert_V_to_T(volts)
         f = chan0.voltage
         tempList.append(f)
-        timeList.append(time.time())
         timeList.append(time.time()-start_time)
         print(tempList)
         print(timeList)
