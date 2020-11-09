@@ -82,6 +82,9 @@ def graphData(dataList, timeList):
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time    Temperature"])
 
+   
+    xList = []
+    yList = []
     for point in range(len(dataList)):
         temp = dataList[point]
         time = timeList[point]
