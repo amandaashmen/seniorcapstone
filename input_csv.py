@@ -119,8 +119,9 @@ while True:
         print('Voltage = {voltage}%' .format(voltage = set_voltage))
         print('Raw ADC Value: ', chan0.value)
         print('Raw Voltage: ', chan0.voltage)
-        print('Raw converted: ', volts)
-        f = convert_V_to_T(volts)
+        #print('Raw converted: ', volts)
+        #f = convert_V_to_T(volts)
+        f = chan0.voltage
         tempList.append(f)
         timeList.append(time.time())
 
