@@ -26,6 +26,9 @@ mcp = MCP.MCP3008(spi, cs)
 # create an analog input channel on pin 0
 chan0 = AnalogIn(mcp, MCP.P0)
 
+# begin reading
+start_time = time.time()
+
 print('Raw ADC Value: ', chan0.value)
 print('ADC Voltage: ' + str(chan0.voltage) + 'V')
 
@@ -123,13 +126,18 @@ while True:
         #f = convert_V_to_T(volts)
         f = chan0.voltage
         tempList.append(f)
-        timeList.append(time.time())
+        timeList.append(time.time()-start_time)
+        print(tempList)
+        print(timeList)
 
         # save the thermistor reading for the next loop
         last_read = therm
 
     # hang out and do nothing for a half second
     time.sleep(0.5)
+    elapsed_time = time.time() - start_time
+    if elapsed_time > 15:
+        break
 
 graphData()
 
