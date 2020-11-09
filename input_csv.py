@@ -123,6 +123,8 @@ while True:
         f = convert_V_to_T(volts)
         tempList.append(f)
         timeList.append(time.time())
+        print(tempList)
+        print(timeList)
 
         # save the thermistor reading for the next loop
         last_read = therm
