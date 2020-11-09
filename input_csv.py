@@ -83,15 +83,15 @@ def graphData(dataList, timeList):
             tempData.writerow(["Time    Temperature"])
 
    
-    xList = []
-    yList = []
-    for point in range(len(dataList)):
-        temp = dataList[point]
-        time = timeList[point]
+            xList = []
+            yList = []
+            for point in range(len(dataList)):
+                temp = dataList[point]
+                time = timeList[point]
 
-        yList.append(temp)
-        xList.append(time)
-        tempData.writerow([time, temp])
+                yList.append(temp)
+                xList.append(time)
+                tempData.writerow([time, temp])
 
     #evalAxis = np.linspace(0, start_time-time.time(), min(map(len, runList))-1)
 
