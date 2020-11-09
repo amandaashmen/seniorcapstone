@@ -101,7 +101,7 @@ def graphData(dataList, timeList):
     plt.ylabel('Time')
     plt.title('Thermistor Values')
     plot(xList, yList)
-    legend()
+    #legend()
 
 
 while True:
