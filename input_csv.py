@@ -139,6 +139,6 @@ while True:
     if elapsed_time > 15:
         break
 
-graphData()
+graphData(tempList, timeList)
 
     
