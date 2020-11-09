@@ -86,16 +86,16 @@ def graphData(dataList, timeList):
         temp = dataList[point]
         time = timeList[point]
 
-        xList.append(temp)
-        yList.append(time)
+        yList.append(temp)
+        xList.append(time)
         tempData.writerow([time, temp])
 
-    evalAxis = np.linspace(0, time.time(), min(map(len, runList))-1)
+    #evalAxis = np.linspace(0, start_time-time.time(), min(map(len, runList))-1)
 
     plt.xlabel('Temperature (F)')
     plt.ylabel('Time')
     plt.title('Thermistor Values')
-    plot(evalAxis, minList, label='min'+name)
+    plot(xList, yList)
     legend()
 
 
