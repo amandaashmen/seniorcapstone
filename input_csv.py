@@ -9,6 +9,7 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 import pandas
 import csv
 from matplotlib import pyplot as plt
+from pylab import *
 
 # steinhart-hart coefficients
 K0 = 0.00113414
