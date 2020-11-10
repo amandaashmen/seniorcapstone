@@ -95,7 +95,7 @@ def graphData(dataList, timeList):
 
                 xList.append(time)
                 yList.append(temp)
-                tempData.writerow([time, temp])
+                tempData.writerow([time+'/t'+temp])
 
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
