@@ -6,10 +6,10 @@ import board
 import numpy as np
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-import pandas
+#import pandas
 import csv
 from matplotlib import pyplot as plt
-from pylab import *
+#from pylab import *
 
 # steinhart-hart coefficients
 K0 = 0.00113414
@@ -31,8 +31,11 @@ chan0 = AnalogIn(mcp, MCP.P0)
 # begin reading
 start_time = time.time()
 
-print('Raw ADC Value: ', chan0.value)
-print('ADC Voltage: ' + str(chan0.voltage) + 'V')
+# length of time program will run
+DURATION = 5
+
+#print('Raw ADC Value: ', chan0.value)
+#print('ADC Voltage: ' + str(chan0.voltage) + 'V')
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
@@ -84,24 +87,21 @@ def graphData(dataList, timeList):
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time    Temperature"])
 
-   
             xList = []
             yList = []
             for point in range(len(dataList)):
                 temp = dataList[point]
                 time = timeList[point]
 
-                yList.append(temp)
                 xList.append(time)
+                yList.append(temp)
                 tempData.writerow([time, temp])
 
-    #evalAxis = np.linspace(0, start_time-time.time(), min(map(len, runList))-1)
-
-    plt.xlabel('Temperature (F)')
-    plt.ylabel('Time')
+    plt.ylabel('Temperature (F)')
+    plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
-    plot(xList, yList)
-    #legend()
+    plt.plot(xList, yList)
+    plt.show()
 
 
 while True:
@@ -117,33 +117,37 @@ while True:
     if therm_adjust > tolerance:
         therm_changed = True
 
-    if therm_changed:
-        # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
-        set_voltage = remap_range(therm, 0, 65535, 0, 5.2)
+    # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
+    set_voltage = remap_range(therm, 0, 65535, 0, 5.2)
     
-        volts = (chan0.value*5.22)/65535
+    volts = (chan0.value*5.22)/65535 # DO i need both of these
+        
+    #degrees_f = round(convert_V_to_T(volts), 2)
+    degrees_f = round(chan0.voltage, 2) # temporary
+    elapsed_time = round(time.time() - start_time, 2)
+    
+    tempList.append(degrees_f)
+    timeList.append(elapsed_time)
+        
+    # print statements to console
+    print('Voltage = {voltage}%' .format(voltage = set_voltage))
+    print('Raw ADC Value: ', chan0.value)
+    print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
+    print('Time: ', str(elapsed_time) + ' seconds')
+    #print('Raw Converted Voltage: ', str(volts) + 'V')
+    print()
 
-        # set OS volume playback volume
-        print('Voltage = {voltage}%' .format(voltage = set_voltage))
-        print('Raw ADC Value: ', chan0.value)
-        print('Raw Voltage: ', chan0.voltage)
-        #print('Raw converted: ', volts)
-        #f = convert_V_to_T(volts)
-        f = chan0.voltage
-        tempList.append(f)
-        timeList.append(time.time()-start_time)
-        print(tempList)
-        print(timeList)
-
-        # save the thermistor reading for the next loop
-        last_read = therm
+    # save the thermistor reading for the next loop
+    last_read = therm
 
     # hang out and do nothing for a half second
     time.sleep(0.5)
-    elapsed_time = time.time() - start_time
-    if elapsed_time > 15:
+
+    # end program after specified time in seconds
+    if elapsed_time > DURATION:
         break
 
 graphData(tempList, timeList)
+
 
     
