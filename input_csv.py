@@ -63,8 +63,8 @@ def convert_V_to_T(V):
     f = c*(9/5) + 32                            # degrees fahrenheit
 
     #print formatting
-    print('{:.3f}'.format(c) + "C")
-    print('{:.3f}'.format(f) + "F")
+    print('{:.3f}'.format(c) + " C")
+    print('{:.3f}'.format(f) + " F")
 
     return(f)
 
@@ -130,12 +130,12 @@ while True:
     timeList.append(elapsed_time)
         
     # print statements to console
-    print('Voltage (V) = {voltage}' .format(voltage = set_voltage))
+    #print('Voltage (V) = {voltage}' .format(voltage = set_voltage))
     print('Raw ADC Value: ', chan0.value)
+    print('Raw Converted Voltage: ', str(volts) + ' Volts')
     #print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
     print('Time: ', str(elapsed_time) + ' seconds')
-    print('Raw Converted Voltage: ', volts)
-    print()
+        print()
 
     # save the thermistor reading for the next loop
     last_read = therm
