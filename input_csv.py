@@ -6,10 +6,8 @@ import board
 import numpy as np
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-#import pandas
 import csv
 from matplotlib import pyplot as plt
-#from pylab import *
 
 # steinhart-hart coefficients
 K0 = 0.00113414
@@ -33,9 +31,6 @@ start_time = time.time()
 
 # length of time program will run
 DURATION = 360
-
-#print('Raw ADC Value: ', chan0.value)
-#print('ADC Voltage: ' + str(chan0.voltage) + 'V')
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
@@ -123,17 +118,14 @@ while True:
     volts = round((chan0.value*5.22)/65535, 2) # DO i need both of these
         
     degrees_f = round(convert_V_to_T(volts), 2)
-    #degrees_f = round(chan0.voltage, 2) # temporary
     elapsed_time = round(time.time() - start_time, 2)
     
     tempList.append(degrees_f)
     timeList.append(elapsed_time)
         
     # print statements to console
-    #print('Voltage (V) = {voltage}' .format(voltage = set_voltage))
     print('Raw ADC Value: ', chan0.value)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
-    #print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
     print('Time: ', str(elapsed_time) + ' seconds')
     print()
 
