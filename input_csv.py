@@ -4,9 +4,9 @@ import busio
 import digitalio
 import board
 import numpy as np
+import csv
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-import csv
 from matplotlib import pyplot as plt
 
 # steinhart-hart coefficients
