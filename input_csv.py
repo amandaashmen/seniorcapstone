@@ -120,7 +120,7 @@ while True:
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
     set_voltage = remap_range(therm, 0, 65535, 0, 5.2)
     
-    volts = (chan0.value*5.22)/65535 # DO i need both of these
+    volts = round((chan0.value*5.22)/65535, 2) # DO i need both of these
         
     degrees_f = round(convert_V_to_T(volts), 2)
     #degrees_f = round(chan0.voltage, 2) # temporary
