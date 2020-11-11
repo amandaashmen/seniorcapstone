@@ -32,7 +32,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 start_time = time.time()
 
 # length of time program will run
-DURATION = 60
+DURATION = 120
 
 #print('Raw ADC Value: ', chan0.value)
 #print('ADC Voltage: ' + str(chan0.voltage) + 'V')
@@ -135,7 +135,7 @@ while True:
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
     #print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
     print('Time: ', str(elapsed_time) + ' seconds')
-        print()
+    print()
 
     # save the thermistor reading for the next loop
     last_read = therm
