@@ -134,7 +134,7 @@ while True:
     print('Raw ADC Value: ', chan0.value)
     #print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
     print('Time: ', str(elapsed_time) + ' seconds')
-    print('Raw Converted Voltage: ', str(round(volts),2) + 'V')
+    print('Raw Converted Voltage: ', volts)
     print()
 
     # save the thermistor reading for the next loop
