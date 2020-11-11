@@ -32,7 +32,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 start_time = time.time()
 
 # length of time program will run
-DURATION = 5
+DURATION = 60
 
 #print('Raw ADC Value: ', chan0.value)
 #print('ADC Voltage: ' + str(chan0.voltage) + 'V')
