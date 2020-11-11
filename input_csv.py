@@ -122,19 +122,19 @@ while True:
     
     volts = (chan0.value*5.22)/65535 # DO i need both of these
         
-    #degrees_f = round(convert_V_to_T(volts), 2)
-    degrees_f = round(chan0.voltage, 2) # temporary
+    degrees_f = round(convert_V_to_T(volts), 2)
+    #degrees_f = round(chan0.voltage, 2) # temporary
     elapsed_time = round(time.time() - start_time, 2)
     
     tempList.append(degrees_f)
     timeList.append(elapsed_time)
         
     # print statements to console
-    print('Voltage = {voltage}%' .format(voltage = set_voltage))
+    print('Voltage (V) = {voltage}' .format(voltage = set_voltage))
     print('Raw ADC Value: ', chan0.value)
-    print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
+    #print('Raw Voltage: ', str(round(chan0.voltage, 2)) + ' V')
     print('Time: ', str(elapsed_time) + ' seconds')
-    #print('Raw Converted Voltage: ', str(volts) + 'V')
+    print('Raw Converted Voltage: ', str(round(volts),2) + 'V')
     print()
 
     # save the thermistor reading for the next loop
