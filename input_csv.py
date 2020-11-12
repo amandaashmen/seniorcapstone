@@ -77,7 +77,7 @@ def remap_range(value, left_min, left_max, right_min, right_max):
 
 def graphData(dataList, timeList):
     # creates csv file to write data to
-    filename = 'test11_1.csv'
+    filename = 'test11_3.csv'
     with open(filename, mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time    Temperature"])
