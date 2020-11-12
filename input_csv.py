@@ -30,7 +30,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 start_time = time.time()
 
 # length of time program will run
-DURATION = 360
+DURATION = 180
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
