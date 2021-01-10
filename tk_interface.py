@@ -1,7 +1,6 @@
 from tkinter import *
 
-LARGE_FONT= ("Verdana", 15)
-SMALL_FONT= ("Verdana italic", 13)
+LARGE_FONT= ("Verdana bold", 20)
 
 class ARDapp(Tk):
 
@@ -36,8 +35,8 @@ class StartPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = Label(self, text="Welcome to the Athletic Recovery Device", font=LARGE_FONT)
-        label2 = Label(self, text="Ready to Recover?", font=SMALL_FONT)
+        label = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
+        label2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
         label.pack(pady=23, padx=10)
         label2.pack(pady=10)
 
@@ -122,5 +121,5 @@ class EndPage(Frame):
 
         
 app = ARDapp()
-app.geometry("500x300")
+app.title("ARD Interface")
 app.mainloop()
