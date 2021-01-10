@@ -1,6 +1,3 @@
-# The code for changing pages was derived from: http://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
-# License: http://creativecommons.org/licenses/by-sa/3.0/	
-
 from tkinter import *
 import tkinter.font as font
 
