@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter.font as font
 
 LARGE_FONT= ("Verdana", 15)
 SMALL_FONT= ("Verdana italic", 13)
@@ -43,7 +42,6 @@ class StartPage(Frame):
         label2.pack(pady=10)
 
         button = Button(self, text="Start", bg='#8B0000', fg='#ffffff', command=lambda: controller.show_frame(Modes))
-        #button['font'] = font.Font(size=15)
         button.configure(font='Helvetica 15 bold')
         button.configure(borderwidth=3)
         button.pack(pady=30)
