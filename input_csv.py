@@ -9,6 +9,8 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 from matplotlib import pyplot as plt
 
+FILENAME = 'test1_25.csv'
+
 # steinhart-hart coefficients
 K0 = 0.00113414
 K1 = 0.000233106
@@ -76,9 +78,8 @@ def remap_range(value, left_min, left_max, right_min, right_max):
     return int(right_min + (valueScaled * right_span))
 
 def graphData(dataList, timeList):
-    # creates csv file to write data to
-    filename = 'test11_4.csv'
-    with open(filename, mode='w', newline= '') as data:
+    # creates csv file to write data to    
+    with open(FILENAME, mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time,    Temperature"])
 
