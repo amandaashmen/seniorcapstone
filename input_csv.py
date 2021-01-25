@@ -48,7 +48,7 @@ def convert_V_to_T(V):
     # returns temperature value in Fahrenheit
 
     # voltage to resistance
-    R = (5.2*100)/(.5*V + 2.6) - 100            
+    R = (5.57*150)/(.5*V + 2.78) - 150            
 
     # resistance to temperature
     term1 = K0
