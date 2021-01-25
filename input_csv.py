@@ -50,7 +50,8 @@ def convert_V_to_T(V):
     # returns temperature value in Fahrenheit
 
     # voltage to resistance
-    R = (5.57*150)/(.5*V + 2.78) - 150            
+    R = (5.75*150)/(.5*V + 2.83) - 150
+    print('Resistance: ', str(R) + ' Ohms')
 
     # resistance to temperature
     term1 = K0
@@ -114,12 +115,12 @@ while True:
         therm_changed = True
 
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
-    #set_voltage = remap_range(therm, 0, 65535, 0, 5)
+    set_voltage = remap_range(therm, 0, 65535, 0, 5.75)
     
-    #volts = round(set_voltage, 2)
-    volts = round((chan0.value*5)/65535, 2) # DO i need both of these -- this ones not good for range 1-5V
+    volts = round(set_voltage, 2)
+    volts2 = round((chan0.value*5.75)/65535, 2) # DO i need both of these -- this ones not good for range 1-5V
         
-    degrees_f = round(convert_V_to_T(volts), 2)
+    degrees_f = round(convert_V_to_T(volts2), 2)
     elapsed_time = round(time.time() - start_time, 2)
     
     tempList.append(degrees_f)
@@ -128,6 +129,7 @@ while True:
     # print statements to console
     print('Raw ADC Value: ', chan0.value)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
+    print('Raw Converted Voltage2: ', str(volts2) + ' Volts')
     print('Time: ', str(elapsed_time) + ' seconds')
     print()
 
