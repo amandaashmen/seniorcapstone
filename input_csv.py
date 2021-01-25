@@ -80,7 +80,7 @@ def graphData(dataList, timeList):
     filename = 'test11_4.csv'
     with open(filename, mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
-            tempData.writerow(["Time    Temperature"])
+            tempData.writerow(["Time,    Temperature"])
 
             xList = []
             yList = []
@@ -90,7 +90,7 @@ def graphData(dataList, timeList):
 
                 xList.append(time)
                 yList.append(temp)
-                tempData.writerow([str(time)+'\t'+str(temp)])
+                tempData.writerow([str(time)+',\t'+str(temp)])
 
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
@@ -115,7 +115,8 @@ while True:
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
     set_voltage = remap_range(therm, 0, 65535, 0, 5.2)
     
-    volts = round((chan0.value*5.22)/65535, 2) # DO i need both of these
+    volts = round(set_voltage, 2)
+    #volts = round((chan0.value*5.22)/65535, 2) # DO i need both of these -- this ones not good for range 1-5V
         
     degrees_f = round(convert_V_to_T(volts), 2)
     elapsed_time = round(time.time() - start_time, 2)
@@ -139,7 +140,4 @@ while True:
     if elapsed_time > DURATION:
         break
 
-graphData(tempList, timeList)
-
-
-    
+graphData(tempList, timeList)  
