@@ -1,11 +1,12 @@
+import time
 from tkinter import *
+from tkinter import messagebox
 
-<<<<<<< HEAD
 LARGE_FONT= ("Verdana bold", 15)
 SMALL_FONT= ("Verdana italic", 13)
-=======
-LARGE_FONT= ("Verdana bold", 20)
->>>>>>> 590890d69067df49cc20dc6b549c940bd612cc32
+TEMP_VAR = ""
+DUR_VAR = ""
+PASSWORD = "U"
 
 class ARDapp(Tk):
 
@@ -18,6 +19,9 @@ class ARDapp(Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
         
+        self.shared_data = {"temperature": StringVar(),
+                            "duration": StringVar()}
+
         self.frames = {}
 
         for F in (StartPage, Modes, Locked, Custom, Confirm, EndPage):
@@ -31,7 +35,6 @@ class ARDapp(Tk):
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
-
         frame = self.frames[cont]
         frame.tkraise()
 
@@ -79,83 +82,187 @@ class Locked(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = Label(self, text="Enter Password", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
+        
+        def checkPass():
+            if passEntry.get() == PASSWORD:
+                controller.show_frame(Custom)
+            else:
+                messagebox.showinfo("Password Entry", "Incorrect: Try Again")
 
-        passEntry= Entry(self, width=30, font=("Arial",18,""))
-        passEntry.pack()
+        title = Label(self, text="Enter Password", font=LARGE_FONT)
+        title.pack(pady=10,padx=10)
+
+        passEntry= Entry(self, width=15, font=("Arial",18,""))
+        passEntry.pack(pady=10,padx=10)
 
         back = Button(self, text="Back", command=lambda: controller.show_frame(Modes))
-        back.pack()
+        back.pack(pady=10,padx=10)
 
-        submit = Button(self, text="Submit", command=lambda: controller.show_frame(Custom))
-        submit.pack()
+        submit = Button(self, text="Submit", command=checkPass)
+        submit.pack(pady=10,padx=10)
 
 class Custom(Frame):
 
     def __init__(self, parent, controller):
-    
         Frame.__init__(self, parent)
         label = Label(self, text="Custom Setting", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
         
-        minute=StringVar()
-        second=StringVar()
-        minute.set("00")
-        second.set("00")
+        self.controller = controller
 
-        temp_set = Label(self, text="Set Temp.", font=SMALL_FONT)
-        temp_set.place(x=150,y=70)
+        # Once the Submit button is pressed, this function will execute
+        def set_variables():
+            global TEMP_VAR
+            TEMP_VAR = tempEntry.get()
+            print("custom")
+            print(TEMP_VAR)
+            print("above")
+            global DUR_VAR
+            DUR_VAR = timeEntry.get()
+            #controller.show_frame(Confirm)
+            controller.frames[Confirm].printHi
+            controller.show_frame(Confirm)
 
-        time_set = Label(self, text="Set Time.", font=SMALL_FONT)
-        time_set.place(x=150,y=100)
+        temp_set = Label(self, text="Set Temperature (F)", font=SMALL_FONT)
+        temp_set.place(x=70,y=90)
 
-        tempEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=minute)
-        tempEntry.place(x=260,y=70)
+        time_set = Label(self, text="Set Duration (min.)", font=SMALL_FONT)
+        time_set.place(x=70,y=130)
 
-        minuteEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=minute)
-        minuteEntry.place(x=260,y=100)
-  
-        secondEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=second)
-        secondEntry.place(x=290,y=100)
-        # SEND VARIABLES TO CONFIRM FRAME
+        tempEntry= Entry(self, width=3, font=("Arial",18,""))
+        tempEntry.place(x=260,y=90)
+
+        timeEntry= Entry(self, width=3, font=("Arial",18,""))
+        timeEntry.place(x=260,y=130)
+
         back = Button(self, text="Back", command=lambda: controller.show_frame(Locked))
-        back.place(x=150,y=200)
+        back.place(x=100,y=200)
 
-        submit = Button(self, text="Submit", command=lambda: controller.show_frame(Confirm))
-        submit.place(x=300,y=200)
+        submit = Button(self, text="Submit", command=set_variables)
+        submit.place(x=250,y=200)
+
 
 class Confirm(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = Label(self, text="Confirm", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
-
+        self.controller = controller # necessda?
         
-        c_temp = Label(self, text="Current Temp.")
-        c_temp.pack(pady=10,padx=10)
+        # Declaration of variables
+        #minute=DUR_VAR
+        minute=DUR_VAR
+        second=StringVar()
+  
+        # setting the default value as 0
+        #minute.set("9"+DUR_VAR+"9")                    #DUR_VAR makes it blank
+        second.set("00")
 
-        d_temp = Label(self, text="Desired Temp.")
-        d_temp.pack(pady=10,padx=10)
+        #def printMode():
+        #while(1):
+        current_temp = Label(self, text="Current Temperature: 70", font=SMALL_FONT)
+        current_temp.place(x=100,y=110)
+            
+        desired_temp = Label(self, text="Desired temperature: ", font=SMALL_FONT)
+        desired_temp.place(x= 100, y = 140)
+        tempLabel = Label(self, text=TEMP_VAR, font=SMALL_FONT)
+        #tempLabel.place(x= 170, y = 140)
+            
+        timeLabel = Label(self, text="Timer: "+DUR_VAR+":", font=SMALL_FONT)
+        secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
+        secondLabel.place(x= 195, y = 170)
+        timeLabel.place(x= 100, y = 170)
 
-        duration = Label(self, text="Desired Temp.")
-        duration.pack(pady=10,padx=10)
+        def update():
+                #global TEMP_VAR
+            
+            print(TEMP_VAR)
+            tempLabel.config(text=TEMP_VAR)
+            
+        #self.parent.after(100, update)
+        self.after(100, update)
+        #self.controller.after(100, update)
 
-        back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
-        back.pack(pady=10,padx=10)
+        def printHi():
+            print("confirm")
+            print(TEMP_VAR)
+            tempLabel.config(text=TEMP_VAR)
+            print('config')
+            tempLabel.place(x= 170, y = 140)
 
-        def clickedBegin(button):
+        #self.printHi = printHi()
+
+            #self.update()
+            #time.sleep(1)
+
+            # Use of Entry class to take input from the user  
+        #minuteEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=minute)
+        #minuteEntry.place(x=170,y=170)
+  
+            #secondEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=second)
+        #secondEntry.place(x=217,y=170)
+
+        def submit(button):
+            #def reformat():
+             #   title.destroy()
+              #  showTemp.destroy()
+               # button['text'] = 'click'
+               # temp = 0
+
             button['text'] = 'End'
             button['command'] = lambda: controller.show_frame(EndPage)
+            #button['command'] = lambda: reformat   
 
-        begin = Button(self, text="Begin", command=lambda: clickedBegin(begin))
-        begin.pack()
+            #try:
+                # the input provided by the user is
+                # stored in here :temp
+            temp = int(DUR_VAR)*60
+            #except:
+            #    print("Please input the right value")
+            while temp >-1:
+                #controller.show_frame(EndPage)
+
+                # divmod(firstvalue = temp//60, secondvalue = temp%60)
+                mins,secs = divmod(temp, 60) 
+           
+                # using format () method to store the value up to 
+                # two decimal places
+                #secondLabel.config(text="{0:2d}".format(secs))
+                #minute.set("{0:2d}".format(mins))
+                #second.set("{0:2d}".format(secs))
+  
+                # updating the GUI window after decrementing the
+                # temp value every time
+                #self.update()
+                #time.sleep(1)
+  
+                # when temp value = 0; then a messagebox pop's up
+                # with a message:"Time's up"
+                if (temp == 0):
+                    messagebox.showinfo("Time Countdown", "Time's up ")
+         
+                # after every one sec the value of temp will be decremented
+                # by one
+                temp -= 1
+
+
+ 
+        title = Label(self, text="Confirm", font=LARGE_FONT)
+        title.pack(pady=10,padx=10)
+
+        #showTemp = Button(self, text="Click to check mode", command = printMode, fg="navy", font="Helvetica 14")
+        #showTemp.pack(pady=10)
+        
+        back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
+        back.place(x=70, y=250)
+
+        begin = Button(self, text="Begin", command=lambda: submit(begin))
+        begin.place(x=250, y=250)
 
 class EndPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
@@ -164,7 +271,6 @@ class EndPage(Frame):
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
         done.pack()
-
         
 app = ARDapp()
 app.title("ARD Interface")
