@@ -9,7 +9,7 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 from matplotlib import pyplot as plt
 
-FILENAME = 'test1_25.csv'
+FILENAME = 'test1_27_test5.csv'
 
 # steinhart-hart coefficients
 K0 = 0.00113414
@@ -32,7 +32,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 start_time = time.time()
 
 # length of time program will run
-DURATION = 360
+DURATION = 120
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
@@ -50,7 +50,7 @@ def convert_V_to_T(V):
     # returns temperature value in Fahrenheit
 
     # voltage to resistance
-    R = (5.75*150)/(.5*V + 2.83) - 150
+    R = (5.61*150)/(.51*V + 2.89) - 150
     print('Resistance: ', str(R) + ' Ohms')
 
     # resistance to temperature
@@ -92,7 +92,7 @@ def graphData(dataList, timeList):
 
                 xList.append(time)
                 yList.append(temp)
-                tempData.writerow([str(time)+',\t'+str(temp)])
+                tempData.writerow([time,temp])
 
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
@@ -107,18 +107,25 @@ while True:
 
     # read the analog pin
     therm = chan0.value
-
+    
     # how much has it changed since the last read?
     therm_adjust = abs(therm - last_read)
 
     if therm_adjust > tolerance:
         therm_changed = True
+        
+#     therm_total = 0
+#     count = 0
+#     samples = 10
+#     while (count < samples):
+#         therm_total=+ therm
+#         count+=1
+#     therm = therm_total/samples
 
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
-    set_voltage = remap_range(therm, 0, 65535, 0, 5.75)
+    set_voltage = remap_range(therm, 0, 65535, 0, 5.61)
     
-    volts = round(set_voltage, 2)
-    volts2 = round((chan0.value*5.75)/65535, 2) # DO i need both of these -- this ones not good for range 1-5V
+    volts2 = (chan0.value*5.61)/(65535) # DO i need both of these -- this ones not good for range 1-5V
         
     degrees_f = round(convert_V_to_T(volts2), 2)
     elapsed_time = round(time.time() - start_time, 2)
@@ -128,7 +135,7 @@ while True:
         
     # print statements to console
     print('Raw ADC Value: ', chan0.value)
-    print('Raw Converted Voltage: ', str(volts) + ' Volts')
+    print('Raw Converted Voltage: ', str(set_voltage) + ' Volts')
     print('Raw Converted Voltage2: ', str(volts2) + ' Volts')
     print('Time: ', str(elapsed_time) + ' seconds')
     print()
