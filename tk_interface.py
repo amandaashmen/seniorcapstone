@@ -26,7 +26,7 @@ class ARDapp(Tk):
         self.contents = StringVar()
 
         #self.shared_data = {"temperature": StringVar(),
-                            "duration": StringVar()}
+                            #"duration": StringVar()}
 
         self.frames = {}
 
@@ -143,7 +143,7 @@ class Custom(Frame):
             #con.printHi()
             #controller.frames[Confirm].printHi
             controller.contents.set(temp.get())
-            controller.shared_data["temperature"] = temp.get()
+            #controller.shared_data["temperature"] = temp.get()
             controller.show_frame(Confirm)
 
         temp_set = Label(self, text="Set Temperature (F)", font=SMALL_FONT)
