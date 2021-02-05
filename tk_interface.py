@@ -136,35 +136,32 @@ class Confirm(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
 
-        # Declaration of variables
-        #minute=DUR_VAR
-        minute=DUR_VAR
         second=StringVar()
-
-        # setting the default value as 0
-        #minute.set("9"+DUR_VAR+"9")                    #DUR_VAR makes it blank
         second.set("00")
 
-        #def printMode():
-        #while(1):
         current_temp = Label(self, text="Current Temperature: 70", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
 
         desired_temp = Label(self, text="Desired temperature: ", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
 
-        #tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.shared_data["temperature"])
-        tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temp)
-        tempLabel.place(x= 170, y = 140)
+        tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
+        tempLabel.place(x= 300, y = 140)
 
-
-        timeLabel = Label(self, text="Timer: "+DUR_VAR+":", font=SMALL_FONT)
+        timeLabel = Label(self, text="Timer:", font=SMALL_FONT)
         timeLabel.place(x= 100, y = 170)
+
+        minuteLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
+        minuteLabel.place(x= 163, y = 170)
+
+        colon = Label(self, font=SMALL_FONT, text= ":")
+        colon.place(x=187, y=169)
+
         secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
         secondLabel.place(x= 195, y = 170)
 
         #self.parent.after(100, update)
-        self.after(100, update)
+        #self.after(100, update)
         #self.controller.after(100, update)
 
             #self.update()
@@ -184,7 +181,7 @@ class Confirm(Frame):
             #try:
                 # the input provided by the user is
                 # stored in here :temp
-            temp = int(DUR_VAR)*60
+            temp = int(controller.duration.get())*60
             #except:
             #    print("Please input the right value")
             while temp >-1:
@@ -214,7 +211,6 @@ class Confirm(Frame):
                 temp -= 1
 
 
-
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.pack(pady=10,padx=10)
 
@@ -224,17 +220,6 @@ class Confirm(Frame):
         begin = Button(self, text="Begin", command=lambda: submit(begin))
         begin.place(x=250, y=250)
 
-    def printHi(self):
-        tempLabel = Label(self, text=TEMP_VAR, font=SMALL_FONT)
-        tempLabel.pack()
-        print("confirm")
-        print(TEMP_VAR)
-        tempLabel.config(text=TEMP_VAR)
-        print('config')
-        tempLabel.place(x= 170, y = 140)
-        begin = Button(self, text="Begdfgin", command=lambda: submit(begin))
-        begin.place(x=300, y=250)
-
 class EndPage(Frame):
 
     def __init__(self, parent, controller):
@@ -243,11 +228,17 @@ class EndPage(Frame):
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        mode = Label(self, text="__F for __ minutes.", font=SMALL_FONT)
-        mode.pack(pady=10,padx=10)
+        mode = Label(self, text="   F for     minutes.", font=SMALL_FONT)
+        mode.place(x=131,y=60)
+
+        tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
+        tempLabel.place(x= 124, y = 60)
+
+        durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
+        durationLabel.place(x= 193, y = 60)
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
-        done.pack()
+        done.place(x=128, y=100)
 
 app = ARDapp()
 app.title("ARD Interface")
