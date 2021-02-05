@@ -4,8 +4,6 @@ from tkinter import messagebox
 
 LARGE_FONT= ("Verdana bold", 15)
 SMALL_FONT= ("Verdana italic", 13)
-TEMP_VAR = ""
-DUR_VAR = ""
 PASSWORD = "U"
 
 class ARDapp(Tk):
@@ -19,14 +17,9 @@ class ARDapp(Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        ##self.entrythingy = Entry()
-        #self.entrythingy.pack()
-
-        # Create the application variable.
-        self.contents = StringVar()
-
-        #self.shared_data = {"temperature": StringVar(),
-                            #"duration": StringVar()}
+        # shared variables across frames
+        self.temperature = StringVar()
+        self.duration = StringVar()
 
         self.frames = {}
 
@@ -58,15 +51,6 @@ class StartPage(Frame):
         button.configure(borderwidth=3)
         button.pack(pady=30)
 
-        #self.entrythingy = Entry()
-        # Set it to some value.
-        ##controller.contents.set("this is a variable")
-        # Tell the entry widget to watch this variable.
-        ##controller.entrythingy["textvariable"] = controller.contents
-        #controller.entrythingy.pack() #packs to every frame
-        ##myEntry = Entry(self, textvariable = controller.entrythingy.get())
-        ##myEntry.pack()
-
 class Modes(Frame):
 
     def __init__(self, parent, controller):
@@ -89,12 +73,6 @@ class Modes(Frame):
         custom = Button(self, text="Custom Setting", width = 24, command=lambda: controller.show_frame(Locked))
         custom.configure(font='Helvetica 13')
         custom.pack(pady=15)
-
-        ##entrynew = Entry(self)
-        ##entrynew.pack()
-        ##controller.contents.set(entrynew.get())
-        # Tell the entry widget to watch this variable.
-        ##controller.entrythingy["textvariable"] = controller.contents
 
 class Locked(Frame):
 
@@ -126,24 +104,13 @@ class Custom(Frame):
         label = Label(self, text="Custom Setting", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        ##self.controller = controller
-        temp = StringVar()
+        set_temp = StringVar()
+        set_dur = StringVar()
 
         # Once the Submit button is pressed, this function will execute
         def set_variables():
-            #global TEMP_VAR
-            #TEMP_VAR = tempEntry.get()
-            #print("custom")
-            #print(TEMP_VAR)
-            #print("above")
-            #global DUR_VAR
-            #DUR_VAR = timeEntry.get()
-            #controller.show_frame(Confirm)
-            #con = Confirm(parent, controller)
-            #con.printHi()
-            #controller.frames[Confirm].printHi
-            controller.contents.set(temp.get())
-            #controller.shared_data["temperature"] = temp.get()
+            controller.temperature.set(set_temp.get())
+            controller.duration.set(set_dur.get())
             controller.show_frame(Confirm)
 
         temp_set = Label(self, text="Set Temperature (F)", font=SMALL_FONT)
@@ -152,10 +119,10 @@ class Custom(Frame):
         time_set = Label(self, text="Set Duration (min.)", font=SMALL_FONT)
         time_set.place(x=70,y=130)
 
-        tempEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=temp)
+        tempEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=set_temp)
         tempEntry.place(x=260,y=90)
 
-        timeEntry= Entry(self, width=3, font=("Arial",18,""))
+        timeEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=set_dur)
         timeEntry.place(x=260,y=130)
 
         back = Button(self, text="Back", command=lambda: controller.show_frame(Locked))
@@ -166,11 +133,8 @@ class Custom(Frame):
 
 
 class Confirm(Frame):
-    #def printHi(self):
-        #print('hi')
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        #self.controller = controller # necessda?
 
         # Declaration of variables
         #minute=DUR_VAR
@@ -190,36 +154,18 @@ class Confirm(Frame):
         desired_temp.place(x= 100, y = 140)
 
         #tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.shared_data["temperature"])
-        tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.contents)
+        tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temp)
         tempLabel.place(x= 170, y = 140)
-
-        #contents = StringVar()
-        # Set it to some value.
-        #contents.set(TEMP_VAR)
-        #maqybe make contents global and set in the other frame
-        # Tell the entry widget to watch this variable.
-        #tempLabel["textvariable"] = contents
 
 
         timeLabel = Label(self, text="Timer: "+DUR_VAR+":", font=SMALL_FONT)
+        timeLabel.place(x= 100, y = 170)
         secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
         secondLabel.place(x= 195, y = 170)
-        timeLabel.place(x= 100, y = 170)
-
-        def update():
-                #global TEMP_VAR
-
-            print(TEMP_VAR)
-            tempLabel.config(text=TEMP_VAR)
 
         #self.parent.after(100, update)
         self.after(100, update)
         #self.controller.after(100, update)
-
-        def printHi(self):
-            print("confirm")
-
-        #self.printHi = printHi()
 
             #self.update()
             #time.sleep(1)
@@ -232,15 +178,8 @@ class Confirm(Frame):
         #secondEntry.place(x=217,y=170)
 
         def submit(button):
-            #def reformat():
-             #   title.destroy()
-              #  showTemp.destroy()
-               # button['text'] = 'click'
-               # temp = 0
-
             button['text'] = 'End'
             button['command'] = lambda: controller.show_frame(EndPage)
-            #button['command'] = lambda: reformat
 
             #try:
                 # the input provided by the user is
@@ -278,9 +217,6 @@ class Confirm(Frame):
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.pack(pady=10,padx=10)
-
-        #showTemp = Button(self, text="Click to check mode", command = printMode, fg="navy", font="Helvetica 14")
-        #showTemp.pack(pady=10)
 
         back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
         back.place(x=70, y=250)
