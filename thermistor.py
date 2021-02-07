@@ -9,8 +9,11 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 from matplotlib import pyplot as plt
 
-FILENAME = 'test1_27_test5.csv'
+FILENAME = '2_7test2.csv'
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++volta
+VS = 5.79
+R1 = 145
 # steinhart-hart coefficients
 K0 = 0.00113414
 K1 = 0.000233106
@@ -32,7 +35,7 @@ chan0 = AnalogIn(mcp, MCP.P0)
 start_time = time.time()
 
 # length of time program will run
-DURATION = 120
+DURATION = 300
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
@@ -43,15 +46,16 @@ tolerance = 250     # to keep from being jittery we'll only change
 tempList = []       # creates an empty list of temperature values read
 timeList = []       # creates an empty list of time values per temperature
 
-def convert_V_to_T(V):
+def convert_V_to_T(Vout):
     # takes a voltage value from amplifier to ADC
     # maps to internal resistance of thermistor
     # calculates temperature in Celcius and Fahrenheit from Steinhart-Hart Equation
     # returns temperature value in Fahrenheit
 
     # voltage to resistance
-    R = (5.61*150)/(.51*V + 2.89) - 150
-    print('Resistance: ', str(R) + ' Ohms')
+    GAIN = 2.68-0.154*Vout
+    R = (VS*R1)/((1/GAIN)*Vout + (VS/2)) - R1
+    print('Resistance: ', str(R) + ' kOhms')
 
     # resistance to temperature
     term1 = K0
@@ -79,7 +83,7 @@ def remap_range(value, left_min, left_max, right_min, right_max):
     return int(right_min + (valueScaled * right_span))
 
 def graphData(dataList, timeList):
-    # creates csv file to write data to    
+    # creates csv file to write data to
     with open(FILENAME, mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time,    Temperature"])
@@ -107,13 +111,13 @@ while True:
 
     # read the analog pin
     therm = chan0.value
-    
+
     # how much has it changed since the last read?
     therm_adjust = abs(therm - last_read)
 
     if therm_adjust > tolerance:
         therm_changed = True
-        
+
 #     therm_total = 0
 #     count = 0
 #     samples = 10
@@ -123,19 +127,19 @@ while True:
 #     therm = therm_total/samples
 
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
-    set_voltage = remap_range(therm, 0, 65535, 0, 5.61)
-    
-    volts2 = (chan0.value*5.61)/(65535) # DO i need both of these -- this ones not good for range 1-5V
-        
+    #set_voltage = remap_range(therm, 0, 65535, 0, 5.61)
+
+    volts2 = (chan0.value*VS)/(65535) # DO i need both of these -- this ones not good for range 1-5V
+
     degrees_f = round(convert_V_to_T(volts2), 2)
     elapsed_time = round(time.time() - start_time, 2)
-    
+
     tempList.append(degrees_f)
     timeList.append(elapsed_time)
-        
+
     # print statements to console
     print('Raw ADC Value: ', chan0.value)
-    print('Raw Converted Voltage: ', str(set_voltage) + ' Volts')
+    #print('Raw Converted Voltage: ', str(set_voltage) + ' Volts')
     print('Raw Converted Voltage2: ', str(volts2) + ' Volts')
     print('Time: ', str(elapsed_time) + ' seconds')
     print()
@@ -150,4 +154,4 @@ while True:
     if elapsed_time > DURATION:
         break
 
-graphData(tempList, timeList)  
+graphData(tempList, timeList)
