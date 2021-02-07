@@ -11,7 +11,9 @@ from matplotlib import pyplot as plt
 
 FILENAME = '2_7test2.csv'
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++volta
+OUTPUT = 2.5
+DURATION = 300
+
 VS = 5.79
 R1 = 145
 # steinhart-hart coefficients
@@ -33,9 +35,6 @@ chan0 = AnalogIn(mcp, MCP.P0)
 
 # begin reading
 start_time = time.time()
-
-# length of time program will run
-DURATION = 300
 
 last_read = 0       # this keeps track of the last value
 tolerance = 250     # to keep from being jittery we'll only change
