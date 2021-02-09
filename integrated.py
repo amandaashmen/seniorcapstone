@@ -16,13 +16,13 @@ import board
 import busio
 import adafruit_mcp4725
 
-FILENAME = '2_9test1.csv'
-# testing filename from terminal
-first_arg = sys.argv[1]
-print(first_arg)
+try:
+    FILENAME = sys.argv[1]
+except IndexError:
+    FILENAME = input("Enter filename.\n")
 
 OUTPUT = 2.5        # Volts
-DURATION = 300      # seconds
+DURATION = 20      # seconds
 
 VS = 5.79           # Volts
 R1 = 145            # Ohms
@@ -42,12 +42,12 @@ GPIO.setup(channel, GPIO.OUT)
 GPIO.output(channel, GPIO.HIGH)
 # Initialize I2C bus.
 i2c = busio.I2C(3, 2)
+# Initialize MCP4725 - DAC
+dac = adafruit_mcp4725.MCP4725(i2c, address=0x60)
 # Set pin output to desired voltage value
 dac.normalized_value = OUTPUT/3.55
 
 # ADC SET-UP
-# Initialize MCP4725 - DAC
-dac = adafruit_mcp4725.MCP4725(i2c, address=0x60)
 # create the spi bus
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 # create the cs (chip select)
@@ -167,8 +167,8 @@ while True:
 
     # end program after specified time in seconds
     if elapsed_time > DURATION:
-        # done with library, free up resources & return back to default
-        GPIO.cleanup()
         break
 
+# done with library, free up resources & return back to default
+GPIO.cleanup()
 graphData(tempList, timeList)
