@@ -51,4 +51,4 @@ while False:
 dac.normalized_value = voltage/3.55
 
 # done with library, free up resources & return back to default
-#gitGPIO.cleanup()
+GPIO.cleanup()

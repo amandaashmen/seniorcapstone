@@ -9,13 +9,19 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 from matplotlib import pyplot as plt
 
-FILENAME = '2_7test2.csv'
+# pi output imports
+import RPi.GPIO as GPIO
+import board
+import busio
+import adafruit_mcp4725
 
-OUTPUT = 2.5
-DURATION = 300
+FILENAME = '2_9test1.csv'
 
-VS = 5.79
-R1 = 145
+OUTPUT = 2.5        # Volts
+DURATION = 300      # seconds
+
+VS = 5.79           # Volts
+R1 = 145            # Ohms
 # steinhart-hart coefficients
 K0 = 0.00113414
 K1 = 0.000233106
