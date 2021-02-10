@@ -21,8 +21,8 @@ try:
 except IndexError:
     FILENAME = input("Enter filename.\n")
 
-OUTPUT = 2.5        # Volts
-DURATION = 20      # seconds
+OUTPUT = 2.0        # Volts
+DURATION = 300       # seconds
 
 VS = 5.79           # Volts
 R1 = 145            # Ohms
@@ -125,6 +125,7 @@ def graphData(dataList, timeList):
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
     plt.plot(xList, yList)
+    plt.savefig(FILENAME+'.png')
     plt.show()
 
 
