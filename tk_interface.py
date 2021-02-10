@@ -136,7 +136,9 @@ class Confirm(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
 
+        minute = StringVar()
         second=StringVar()
+        minute.set(controller.duration.get())
         second.set("00")
 
         current_temp = Label(self, text="Current Temperature: 70", font=SMALL_FONT)
@@ -151,14 +153,19 @@ class Confirm(Frame):
         timeLabel = Label(self, text="Timer:", font=SMALL_FONT)
         timeLabel.place(x= 100, y = 170)
 
-        minuteLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        minuteLabel.place(x= 163, y = 170)
+        #minuteLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
+        #minuteLabel.place(x= 163, y = 170)
+
+        minuteLabel= Label(self, width=3, font=SMALL_FONT, textvariable=controller.duration)
+        minuteLabel.place(x=163,y=170)
 
         colon = Label(self, font=SMALL_FONT, text= ":")
         colon.place(x=187, y=169)
 
-        secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
-        secondLabel.place(x= 195, y = 170)
+        #secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
+        #secondLabel.place(x= 195, y = 170)
+        secondLabel= Label(self, width=3, font=SMALL_FONT, textvariable=second)
+        secondLabel.place(x=195,y=170)
 
         #self.parent.after(100, update)
         #self.after(100, update)
@@ -173,22 +180,48 @@ class Confirm(Frame):
 
             #secondEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=second)
         #secondEntry.place(x=217,y=170)
+    def submit():
+    # the input provided by the user is
+    # stored in here :temp
+        temp = int(controller.duration)*60 + int(second.get())
+        while temp >-1:
 
-        def submit(button):
-            button['text'] = 'End'
-            button['command'] = lambda: controller.show_frame(EndPage)
+        # divmod(firstvalue = temp//60, secondvalue = temp%60)
+            mins,secs = divmod(temp,60)
+
+        # using format () method to store the value up to
+        # two decimal places
+            #minute.set("{0:2d}".format(mins))
+            second.set("{0:2d}".format(secs))
+
+        # updating the GUI window after decrementing the
+        # temp value every time
+            root.update()
+            time.sleep(1)
+
+        # when temp value = 0; then a messagebox pop's up
+        # with a message:"Time's up"
+            if (temp == 0):
+                messagebox.showinfo("Time Countdown", "Time's up ")
+
+        # after every one sec the value of temp will be decremented
+        # by one
+            temp -= 1
+        #def submit(button):
+            #button['text'] = 'End'
+            #button['command'] = lambda: controller.show_frame(EndPage)
 
             #try:
                 # the input provided by the user is
                 # stored in here :temp
-            temp = int(controller.duration.get())*60
+            #temp = int(controller.duration.get())*60
             #except:
             #    print("Please input the right value")
-            while temp >-1:
+            #while temp >-1:
                 #controller.show_frame(EndPage)
 
                 # divmod(firstvalue = temp//60, secondvalue = temp%60)
-                mins,secs = divmod(temp, 60)
+                #mins,secs = divmod(temp, 60)
 
                 # using format () method to store the value up to
                 # two decimal places
@@ -203,12 +236,12 @@ class Confirm(Frame):
 
                 # when temp value = 0; then a messagebox pop's up
                 # with a message:"Time's up"
-                if (temp == 0):
-                    messagebox.showinfo("Time Countdown", "Time's up ")
+                #if (temp == 0):
+                 #   messagebox.showinfo("Time Countdown", "Time's up ")
 
                 # after every one sec the value of temp will be decremented
                 # by one
-                temp -= 1
+                #temp -= 1
 
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
