@@ -1,23 +1,19 @@
-############################################################################################
-#
-# INTEGRATED.py
-# Reads an external thermistor sensor from an ADC to Raspberry Pi, converts that
-# value to a temperature, plots the output to a figure & csv file, and outputs
-# a voltage to a DAC chip .
-#
-############################################################################################
+# i am not sure if i need moving average
+# initializing degrees f if using tolerance
+# not sure if i need counter
 import os
 import sys
+import csv
 import time
 import busio
-import digitalio
 import board
+import digitalio
 import numpy as np
-import csv
+from pid_git import PID
+import adafruit_mcp4725 as DAC  
 from matplotlib import pyplot as plt
-from adafruit_mcp3xxx.analog_in import AnalogIn
 import adafruit_mcp3xxx.mcp3008 as MCP
-import adafruit_mcp4725 as DAC    
+from adafruit_mcp3xxx.analog_in import AnalogIn
 
 ## SAVING TO FILENAME
 try:
@@ -26,24 +22,20 @@ except IndexError:
     FILENAME = input("Enter filename.\n")
 
 ## GLOBAL VARIABLES
-OUTPUT = 2.0                    # Volts
-MAX_OUTPUT = 3.55               # Volts
-DURATION = 300                  # seconds
-VS = 5.79                       # Volts
-R1 = 145                        # Ohms
+OUTPUT = 2.0                            # Volts
+MAX_DAC_OUTPUT = 3.55                   # Volts
+MAX_PELT_OUTPUT = 2.5
+DURATION = 300                          # seconds
+VS = 5.79                               # Volts
+R1 = 145                                # Ohms
 # steinhart-hart coefficients
 K0 = 0.00113414
 K1 = 0.000233106
 K2 = 9.32975E-8
 
 ## DAC SET-UP
-#GPIO.setmode(GPIO.BCM)                                              # to use physical board pin numbers
-#channel = 16                                                        # GPIO 16 
-#GPIO.setup(channel, GPIO.OUT)                                       # to set up a channel as an output
-#GPIO.output(channel, GPIO.HIGH)                                     # set the output state of a GPIO pin
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
 dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize MCP4725 - DAC
-dac.normalized_value = OUTPUT/MAX_OUTPUT                             # Set pin output to desired voltage value
 
 ## ADC SET-UP
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)   # create the spi bus
@@ -51,6 +43,10 @@ cs = digitalio.DigitalInOut(board.D22)                               # create th
 mcp = MCP.MCP3008(spi, cs)                                           # create the mcp object MCP3008 - ADC
 chan0 = AnalogIn(mcp, MCP.P0)                                        # create an analog input channel on pin 0
 
+## PID SET-UP
+TARGET = 50                             # degrees
+SAMPLE_TIME = .5                        # seconds
+pelt_pid = PID(0.0, 0.0, 0.0, TARGET)   # create PID object
 
 start_time = time.time()        # begin reading
 last_read = 0                   # this keeps track of the last value to keep from
@@ -66,13 +62,12 @@ def convert_V_to_T(Vout):
     thermistor, calculates temperature in Celcius and Fahrenheit from 
     Steinhart-Hart Equation. Returns temperature value in Fahrenheit.
     """
-
     # voltage to resistance
     GAIN = 2.68-0.154*Vout
     R = (VS*R1)/((1/GAIN)*Vout + (VS/2)) - R1
     print('Resistance: ', str(R) + ' kOhms')
 
-    # resistance to temperature
+    # resistance to temperature: Steinhart-Hart Equation
     term1 = K0
     term2 = K1*(np.log(1000*R))
     term3 = K2*(np.log(1000*R))**3
@@ -85,6 +80,10 @@ def convert_V_to_T(Vout):
 
     return(f)
 
+def adc_voltage(adc_counts):
+    """Converts 16bit adc0 (0-65535) thermistor reading to 0-VS voltage value."""
+    adc_16bit = 65535
+    volts = (adc_counts*VS)/(adc_16bit)
 
 def graphData(dataList, timeList):
     """Creates csv file to write data to."""
@@ -110,44 +109,62 @@ def graphData(dataList, timeList):
     plt.savefig(FILENAME+'.png')
     plt.show()
 
-while True:
-    # we'll assume that the thermistor didn't move
-    therm_changed = False
+#smokertempavg = MovingAverage(100)
+#meattempavg = MovingAverage(100)
 
-    # read the analog pin
-    therm = chan0.value
+#dutycycle = 0
+#ontime = 0
 
-    # how much has it changed since the last read?
-    therm_adjust = abs(therm - last_read)
+#heateron = False
 
-    if therm_adjust > tolerance:
-        therm_changed = True
+def ctrlfunc():
+    counter = 0
+    pelt_pid.setSampleTime(SAMPLE_TIME)
+    pelt_pid.setSetPoint(TARGET)
 
-    if therm_changed:
-        # convert 16bit adc0 (0-65535) thermistor read into 0-VS voltage value
-        adc_16bit = 65535
-        volts = (therm*VS)/(adc_16bit)
+    while True:
+        starttime = time.time()
+        counter = counter + 1
 
-        degrees_f = round(convert_V_to_T(volts), 2)
-        elapsed_time = round(time.time() - start_time, 2)
+        therm_changed = False                           # we'll assume that the thermistor didn't move
 
-        tempList.append(degrees_f)
-        timeList.append(elapsed_time)
+        therm = chan0.value                             # read the analog pin
 
-        # print statements to console
-        print('Raw ADC Value: ', chan0.value)
-        print('Raw Converted Voltage: ', str(volts) + ' Volts')
-        print('Time: ', str(elapsed_time) + ' seconds')
-        print()
+        therm_adjust = abs(therm - last_read)           # how much has it changed since the last read?
 
-        # save the thermistor reading for the next loop
-        last_read = therm
+        if therm_adjust > tolerance:
+            therm_changed = True
 
-    # hang out and do nothing for a half second
-    time.sleep(0.5)
+        if therm_changed:
+            volts = adc_voltage(therm) 
 
-    # end program after specified time in seconds
-    if elapsed_time > DURATION:
-        break
+            degrees_f = round(convert_V_to_T(volts), 2)
+            elapsed_time = round(time.time() - start_time, 2)
 
-graphData(tempList, timeList)
+            tempList.append(degrees_f)
+            timeList.append(elapsed_time)
+
+            # print statements to console
+            print('Raw ADC Value: ', therm)
+            print('Raw Converted Voltage: ', str(volts) + ' Volts')
+            print('Time: ', str(elapsed_time) + ' seconds\n')
+
+            last_read = therm                           # save the thermistor reading for the next loop
+
+        if counter == 50:
+            pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
+            target_voltage = pelt_pid.output                               
+            dac_out = max(min(target_voltage, MAX_PELT), 0)                  # scales output to maximum voltage peltier can handle
+            dac.normalized_value = dac_out/MAX_DAC_OUTPUT                    # Set pin output to desired voltage value
+
+        # end program after specified time in seconds
+        if elapsed_time > DURATION:
+            break
+   
+        time.sleep(0.5)                                 # hang out and do nothing for a half second
+        graphData(tempList, timeList)
+
+
+# Main function
+if __name__ == "__main__":
+    ctrlfunc()
