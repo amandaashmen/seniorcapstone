@@ -109,14 +109,6 @@ def graphData(dataList, timeList):
     plt.savefig(FILENAME+'.png')
     plt.show()
 
-#smokertempavg = MovingAverage(100)
-#meattempavg = MovingAverage(100)
-
-#dutycycle = 0
-#ontime = 0
-
-#heateron = False
-
 def ctrlfunc():
     counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
