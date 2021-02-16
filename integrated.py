@@ -17,7 +17,7 @@ import csv
 from matplotlib import pyplot as plt
 from adafruit_mcp3xxx.analog_in import AnalogIn
 import adafruit_mcp3xxx.mcp3008 as MCP
-import adafruit_mcp4725 as DAC    
+import adafruit_mcp4725 as DAC
 
 ## SAVING TO FILENAME
 try:
@@ -38,7 +38,7 @@ K2 = 9.32975E-8
 
 ## DAC SET-UP
 #GPIO.setmode(GPIO.BCM)                                              # to use physical board pin numbers
-#channel = 16                                                        # GPIO 16 
+#channel = 16                                                        # GPIO 16
 #GPIO.setup(channel, GPIO.OUT)                                       # to set up a channel as an output
 #GPIO.output(channel, GPIO.HIGH)                                     # set the output state of a GPIO pin
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
@@ -54,16 +54,16 @@ chan0 = AnalogIn(mcp, MCP.P0)                                        # create an
 
 start_time = time.time()        # begin reading
 last_read = 0                   # this keeps track of the last value to keep from
-tolerance = 250                 # being jittery we'll only change voltage when the 
+tolerance = 250                 # being jittery we'll only change voltage when the
                                 # thermistor has moved a significant amount on a 16-bit ADC
-                        
+
 tempList = []                   # creates an empty list of temperature values read
 timeList = []                   # creates an empty list of time values per temperature
 
 def convert_V_to_T(Vout):
-    """ 
-    Takes a voltage value from amplifier to ADC, maps to internal resistance of 
-    thermistor, calculates temperature in Celcius and Fahrenheit from 
+    """
+    Takes a voltage value from amplifier to ADC, maps to internal resistance of
+    thermistor, calculates temperature in Celcius and Fahrenheit from
     Steinhart-Hart Equation. Returns temperature value in Fahrenheit.
     """
 
@@ -112,36 +112,36 @@ def graphData(dataList, timeList):
 
 while True:
     # we'll assume that the thermistor didn't move
-    therm_changed = False
+    #therm_changed = False
 
     # read the analog pin
     therm = chan0.value
 
     # how much has it changed since the last read?
-    therm_adjust = abs(therm - last_read)
+    #therm_adjust = abs(therm - last_read)
 
-    if therm_adjust > tolerance:
-        therm_changed = True
+    #if therm_adjust > tolerance:
+    #    therm_changed = True
 
-    if therm_changed:
+    #if therm_changed:
         # convert 16bit adc0 (0-65535) thermistor read into 0-VS voltage value
-        adc_16bit = 65535
-        volts = (therm*VS)/(adc_16bit)
+    adc_16bit = 65535
+    volts = (therm*VS)/(adc_16bit)
 
-        degrees_f = round(convert_V_to_T(volts), 2)
-        elapsed_time = round(time.time() - start_time, 2)
+    degrees_f = round(convert_V_to_T(volts), 2)
+    elapsed_time = round(time.time() - start_time, 2)
 
-        tempList.append(degrees_f)
-        timeList.append(elapsed_time)
+    tempList.append(degrees_f)
+    timeList.append(elapsed_time)
 
         # print statements to console
-        print('Raw ADC Value: ', chan0.value)
-        print('Raw Converted Voltage: ', str(volts) + ' Volts')
-        print('Time: ', str(elapsed_time) + ' seconds')
-        print()
+    print('Raw ADC Value: ', chan0.value)
+    print('Raw Converted Voltage: ', str(volts) + ' Volts')
+    print('Time: ', str(elapsed_time) + ' seconds\n')
 
         # save the thermistor reading for the next loop
-        last_read = therm
+        #last_read = therm
+
 
     # hang out and do nothing for a half second
     time.sleep(0.5)

@@ -10,7 +10,7 @@ import board
 import digitalio
 import numpy as np
 from pid_git import PID
-import adafruit_mcp4725 as DAC  
+import adafruit_mcp4725 as DAC
 from matplotlib import pyplot as plt
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
@@ -23,9 +23,9 @@ except IndexError:
 
 ## GLOBAL VARIABLES
 OUTPUT = 2.0                            # Volts
-MAX_DAC_OUTPUT = 3.55                   # Volts
-MAX_PELT_OUTPUT = 2.5
-DURATION = 300                          # seconds
+MAX_DAC = 3.55                          # Volts
+MAX_PELT = 2.5                          # Volts
+DURATION = 30                           # seconds
 VS = 5.79                               # Volts
 R1 = 145                                # Ohms
 # steinhart-hart coefficients
@@ -46,20 +46,20 @@ chan0 = AnalogIn(mcp, MCP.P0)                                        # create an
 ## PID SET-UP
 TARGET = 50                             # degrees
 SAMPLE_TIME = .5                        # seconds
-pelt_pid = PID(0.0, 0.0, 0.0, TARGET)   # create PID object
+pelt_pid = PID(2.0, 0.0, 0.0, TARGET)   # create PID object
 
 start_time = time.time()        # begin reading
 last_read = 0                   # this keeps track of the last value to keep from
-tolerance = 250                 # being jittery we'll only change voltage when the 
+tolerance = 250                 # being jittery we'll only change voltage when the
                                 # thermistor has moved a significant amount on a 16-bit ADC
-                        
+
 tempList = []                   # creates an empty list of temperature values read
 timeList = []                   # creates an empty list of time values per temperature
 
 def convert_V_to_T(Vout):
-    """ 
-    Takes a voltage value from amplifier to ADC, maps to internal resistance of 
-    thermistor, calculates temperature in Celcius and Fahrenheit from 
+    """
+    Takes a voltage value from amplifier to ADC, maps to internal resistance of
+    thermistor, calculates temperature in Celcius and Fahrenheit from
     Steinhart-Hart Equation. Returns temperature value in Fahrenheit.
     """
     # voltage to resistance
@@ -84,6 +84,7 @@ def adc_voltage(adc_counts):
     """Converts 16bit adc0 (0-65535) thermistor reading to 0-VS voltage value."""
     adc_16bit = 65535
     volts = (adc_counts*VS)/(adc_16bit)
+    return volts
 
 def graphData(dataList, timeList):
     """Creates csv file to write data to."""
@@ -118,7 +119,8 @@ def ctrlfunc():
         starttime = time.time()
         counter = counter + 1
 
-        therm_changed = False                           # we'll assume that the thermistor didn't move
+        #therm_changed = False                           # we'll assume that the thermistor didn't move
+        therm_changed = True
 
         therm = chan0.value                             # read the analog pin
 
@@ -128,7 +130,7 @@ def ctrlfunc():
             therm_changed = True
 
         if therm_changed:
-            volts = adc_voltage(therm) 
+            volts = adc_voltage(therm)
 
             degrees_f = round(convert_V_to_T(volts), 2)
             elapsed_time = round(time.time() - start_time, 2)
@@ -141,20 +143,24 @@ def ctrlfunc():
             print('Raw Converted Voltage: ', str(volts) + ' Volts')
             print('Time: ', str(elapsed_time) + ' seconds\n')
 
-            last_read = therm                           # save the thermistor reading for the next loop
-
+            #last_read = therm                           # save the thermistor reading for the next loop
+        counter = 50
         if counter == 50:
+            degrees_f = 70
             pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
-            target_voltage = pelt_pid.output                               
+            target_out_temp = pelt_pid.output
+            print(target_out_temp)
             dac_out = max(min(target_voltage, MAX_PELT), 0)                  # scales output to maximum voltage peltier can handle
-            dac.normalized_value = dac_out/MAX_DAC_OUTPUT                    # Set pin output to desired voltage value
+            #dac.normalized_value = dac_out/MAX_DAC                    # Set pin output to desired voltage value
+            print(dac_out)
 
         # end program after specified time in seconds
         if elapsed_time > DURATION:
+            graphData(tempList, timeList)
             break
-   
+
         time.sleep(0.5)                                 # hang out and do nothing for a half second
-        graphData(tempList, timeList)
+
 
 
 # Main function
