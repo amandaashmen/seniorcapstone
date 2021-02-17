@@ -144,8 +144,10 @@ def ctrlfunc():
             print('Time: ', str(elapsed_time) + ' seconds\n')
 
             #last_read = therm                           # save the thermistor reading for the next loop
+        dac_normalized_value = OUTPUT
+
         counter = 50
-        if counter == 50:
+        if counter == 50:           # fix sample time
             degrees_f = 70
             pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
             target_out_temp = pelt_pid.output
