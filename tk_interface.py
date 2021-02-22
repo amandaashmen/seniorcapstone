@@ -58,21 +58,27 @@ class Modes(Frame):
         label = Label(self, text="Select Treatment Mode", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        presetA = Button(self, text="Preset A: 40F for 20 minutes", command=lambda: controller.show_frame(Confirm))
+        presetA = Button(self, text="Preset A: 45F for 20 minutes", command=lamba: set_variables(45, 20))
         presetA.configure(font='Helvetica 13')
         presetA.pack(pady=15)
 
-        presetB = Button(self, text="Preset B: 45F for 15 minutes", command=lambda: controller.show_frame(Confirm))
+        presetB = Button(self, text="Preset B: 40F for 15 minutes", command=lamba: set_variables(40, 15))
         presetB.configure(font='Helvetica 13')
         presetB.pack(pady=15)
 
-        presetC = Button(self, text="Preset C: 40F for 10 minutes", command=lambda: controller.show_frame(Confirm))
+        presetC = Button(self, text="Preset C: 35F for 10 minutes", command=lamba: set_variables(35, 10))
         presetC.configure(font='Helvetica 13')
         presetC.pack(pady=15)
 
         custom = Button(self, text="Custom Setting", width = 24, command=lambda: controller.show_frame(Locked))
         custom.configure(font='Helvetica 13')
         custom.pack(pady=15)
+        
+        # Once the mode button is pressed, this function will execute
+        def set_variables(temp, dur):
+            controller.temperature.set(temp)
+            controller.duration.set(dur)
+            controller.show_frame(Confirm)
 
 class Locked(Frame):
 
