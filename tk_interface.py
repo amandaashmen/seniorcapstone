@@ -147,19 +147,19 @@ class Confirm(Frame):
         minute.set(controller.duration.get())
         second.set("00")
 
-        current_temp = Label(self, text="Current Temperature: 70", font=SMALL_FONT)
+        current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
 
-        desired_temp = Label(self, text="Desired temperature: ", font=SMALL_FONT)
+        desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
 
+        timeLabel = Label(self, text="Timer:", fg="navy", font=SMALL_FONT)
+        timeLabel.place(x= 100, y = 170)
+        
         tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
         tempLabel.place(x= 300, y = 140)
 
-        timeLabel = Label(self, text="Timer:", font=SMALL_FONT)
-        timeLabel.place(x= 100, y = 170)
-
-        minuteLabel= Label(self, width=3, font=SMALL_FONT, textvariable=controller.duration)
+        minuteLabel= Label(self, font=SMALL_FONT, textvariable=controller.duration)
         minuteLabel.place(x=163,y=170)
 
         colon = Label(self, font=SMALL_FONT, text= ":")
@@ -195,7 +195,7 @@ class Confirm(Frame):
                 temp -= 1
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
-        title.pack(pady=10,padx=10)
+        title.pack(pady=30,padx=10)
 
         back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
         back.place(x=70, y=250)
@@ -211,17 +211,17 @@ class EndPage(Frame):
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
-        mode.place(x=131,y=60)
+        mode = Label(self, text="    F for      minutes.", fg= "navy", font=SMALL_FONT)
+        mode.place(x=131,y=90)
 
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
-        tempLabel.place(x= 124, y = 60)
+        tempLabel.place(x= 124, y = 90)
 
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        durationLabel.place(x= 193, y = 60)
+        durationLabel.place(x= 193, y = 90)
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
-        done.place(x=128, y=100)
+        done.place(x=128, y=130)
 
 app = ARDapp()
 app.title("ARD Interface")
