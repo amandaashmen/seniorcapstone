@@ -58,15 +58,15 @@ class Modes(Frame):
         label = Label(self, text="Select Treatment Mode", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        presetA = Button(self, text="Preset A: 45F for 20 minutes", command=lamba: set_variables(45, 20))
+        presetA = Button(self, text="Preset A: 45F for 20 minutes", command=lambda: set_variables(45, 20))
         presetA.configure(font='Helvetica 13')
         presetA.pack(pady=15)
 
-        presetB = Button(self, text="Preset B: 40F for 15 minutes", command=lamba: set_variables(40, 15))
+        presetB = Button(self, text="Preset B: 40F for 15 minutes", command=lambda: set_variables(40, 15))
         presetB.configure(font='Helvetica 13')
         presetB.pack(pady=15)
 
-        presetC = Button(self, text="Preset C: 35F for 10 minutes", command=lamba: set_variables(35, 10))
+        presetC = Button(self, text="Preset C: 35F for 10 minutes", command=lambda: set_variables(35, 10))
         presetC.configure(font='Helvetica 13')
         presetC.pack(pady=15)
 
