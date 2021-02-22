@@ -153,114 +153,40 @@ class Confirm(Frame):
         timeLabel = Label(self, text="Timer:", font=SMALL_FONT)
         timeLabel.place(x= 100, y = 170)
 
-        #minuteLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        #minuteLabel.place(x= 163, y = 170)
-
         minuteLabel= Label(self, width=3, font=SMALL_FONT, textvariable=controller.duration)
         minuteLabel.place(x=163,y=170)
 
         colon = Label(self, font=SMALL_FONT, text= ":")
         colon.place(x=190, y=169)
-
-        #secondLabel =  Label(self, textvariable=second, font=SMALL_FONT)
-        #secondLabel.place(x= 195, y = 170)
+        
         secondLabel= Label(self, width=3, font=SMALL_FONT, textvariable=second)
         secondLabel.place(x=196,y=170)
 
-        #self.parent.after(100, update)
-        #self.after(100, update)
-        #self.controller.after(100, update)
-
-            #self.update()
-            #time.sleep(1)
-
-            # Use of Entry class to take input from the user
-        #minuteEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=minute)
-        #minuteEntry.place(x=170,y=170)
-        print('h3ello?')
-            #secondEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=second)
-        #secondEntry.place(x=217,y=170)
-
-
         def submit():
-            print('helloe?')
-    # the input provided by the user is
-    # stored in here :temp
-            #FIRST_RUN = True
-            #if FIRST_RUN:
-            #    minute.set(controller.duration.get())
-            #    FIRST_RUN = False
             temp = int(controller.duration.get())*60 + int(second.get())
             while temp >-1:
-
-        # divmod(firstvalue = temp//60, secondvalue = temp%60)
+                
                 mins,secs = divmod(temp,60)
 
-        # using format () method to store the value up to
-        # two decimal places
+                # using format () method to store the value two decimal places
                 minute.set("{0:2d}".format(mins))
                 second.set("{0:2d}".format(secs))
+                
+                # update widget variables
                 minuteLabel['textvariable']= minute
-
-
                 begin['text'] = 'End'
                 begin['command'] = lambda: controller.show_frame(EndPage)
-                #print(minute.get())
-                #minuteLabel= Label(self, width=3, font=SMALL_FONT, textvariable=minute)
-                #minuteLabel.place(x=163,y=170)
 
-        # updating the GUI window after decrementing the
-        # temp value every time
+                # updating the GUI window after decrementing the temp value every time
                 self.update()
                 time.sleep(1)
 
-        # when temp value = 0; then a messagebox pop's up
-        # with a message:"Time's up"
+                # when temp value = 0; then a messagebox pop's up:"Time's up"
                 if (temp == 0):
                     messagebox.showinfo("Time Countdown", "Time's up ")
-                #print(mins)
-        # after every one sec the value of temp will be decremented
-        # by one
-                temp -= 1
-
-                #minuteLabel.place(x=163,y=170)
-                #print(minute.get())
-
-
-        #def submit(button):
-
-            #try:
-                # the input provided by the user is
-                # stored in here :temp
-            #temp = int(controller.duration.get())*60
-            #except:
-            #    print("Please input the right value")
-            #while temp >-1:
-                #controller.show_frame(EndPage)
-
-                # divmod(firstvalue = temp//60, secondvalue = temp%60)
-                #mins,secs = divmod(temp, 60)
-
-                # using format () method to store the value up to
-                # two decimal places
-                #secondLabel.config(text="{0:2d}".format(secs))
-                #minute.set("{0:2d}".format(mins))
-                #second.set("{0:2d}".format(secs))
-
-                # updating the GUI window after decrementing the
-                # temp value every time
-                #self.update()
-                #time.sleep(1)
-
-                # when temp value = 0; then a messagebox pop's up
-                # with a message:"Time's up"
-                #if (temp == 0):
-                 #   messagebox.showinfo("Time Countdown", "Time's up ")
-
+                
                 # after every one sec the value of temp will be decremented
-                # by one
-                #temp -= 1
-
+                temp -= 1
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.pack(pady=10,padx=10)
