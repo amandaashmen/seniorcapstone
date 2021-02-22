@@ -2,7 +2,7 @@ import time
 from tkinter import *
 from tkinter import messagebox
 
-LARGE_FONT= ("Verdana bold", 15)
+LARGE_FONT= "Verdana 18 bold"
 SMALL_FONT= ("Verdana italic", 13)
 PASSWORD = "U"
 
