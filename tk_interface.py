@@ -209,9 +209,9 @@ class EndPage(Frame):
         Frame.__init__(self, parent)
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
+        label.pack(pady=30,padx=10)
 
-        mode = Label(self, text="    F for      minutes.", fg= "navy", font=SMALL_FONT)
+        mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
         mode.place(x=131,y=90)
 
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
