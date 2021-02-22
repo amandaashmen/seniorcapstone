@@ -22,10 +22,10 @@ except IndexError:
     FILENAME = input("Enter filename.\n")
 
 ## GLOBAL VARIABLES
-OUTPUT = 2.0                            # Volts
-MAX_DAC = 3.55                          # Volts
+OUTPUT = 0                            # Volts
+MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
-DURATION = 30                           # seconds
+DURATION = 90                           # seconds
 VS = 5.79                               # Volts
 R1 = 145                                # Ohms
 # steinhart-hart coefficients
@@ -46,7 +46,7 @@ chan0 = AnalogIn(mcp, MCP.P0)                                        # create an
 ## PID SET-UP
 TARGET = 50                             # degrees
 SAMPLE_TIME = .5                        # seconds
-pelt_pid = PID(2.0, 0.0, 0.0, TARGET)   # create PID object
+pelt_pid = PID(24.0, 0.0, 0.0, TARGET)   # create PID object
 
 start_time = time.time()        # begin reading
 last_read = 0                   # this keeps track of the last value to keep from
@@ -55,7 +55,8 @@ tolerance = 250                 # being jittery we'll only change voltage when t
 
 tempList = []                   # creates an empty list of temperature values read
 timeList = []                   # creates an empty list of time values per temperature
-
+pidList = []
+timeList2 = []
 def convert_V_to_T(Vout):
     """
     Takes a voltage value from amplifier to ADC, maps to internal resistance of
@@ -110,6 +111,30 @@ def graphData(dataList, timeList):
     plt.savefig(FILENAME+'.png')
     plt.show()
 
+def graphData2(dataList2, timeList2):
+    """Creates csv file to write data to."""
+
+    with open(FILENAME+"_pid", mode='w', newline= '') as data:
+            pidData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
+            pidData.writerow(["Time,    PID"])
+
+            xList = []
+            yList = []
+            for point in range(len(dataList2)):
+                pid = dataList2[point]
+                time = timeList2[point]
+
+                xList.append(time)
+                yList.append(pid)
+                pidData.writerow([time,pid])
+
+    plt.ylabel('PID')
+    plt.xlabel('Time (s)')
+    plt.title('PID Values')
+    plt.plot(xList, yList)
+    plt.savefig(FILENAME+'_pid.png')
+    plt.show()
+
 def ctrlfunc():
     counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
@@ -144,25 +169,38 @@ def ctrlfunc():
             print('Time: ', str(elapsed_time) + ' seconds\n')
 
             #last_read = therm                           # save the thermistor reading for the next loop
-        dac_normalized_value = OUTPUT
 
-        counter = 50
-        if counter == 50:           # fix sample time
-            degrees_f = 70
+
+        #counter = 50
+        if counter == 5:           # fix sample time
+            #degrees_f = 70
             pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
             target_out_temp = pelt_pid.output
             print(target_out_temp)
+            target_voltage = (71-target_out_temp)/27
+            print(target_voltage)
             dac_out = max(min(target_voltage, MAX_PELT), 0)                  # scales output to maximum voltage peltier can handle
-            #dac.normalized_value = dac_out/MAX_DAC                    # Set pin output to desired voltage value
+            dac.normalized_value = dac_out/MAX_DAC                    # Set pin output to desired voltage value
             print(dac_out)
+            pidList.append(target_out_temp)
+            timeList2.append(elapsed_time)
+
+            counter = 0
 
         # end program after specified time in seconds
         if elapsed_time > DURATION:
             graphData(tempList, timeList)
+            graphData2(pidList, timeList2)
             break
 
-        time.sleep(0.5)                                 # hang out and do nothing for a half second
-
+        #time.sleep(0.5)                                 # hang out and do nothing for a half second
+        endtime = time.time()
+        processTime = endtime - starttime
+        #print(processTime)      # point .002
+        sleeptime = .1 - processTime
+        if sleeptime < 0:
+            sleeptime = 0
+        time.sleep(sleeptime)
 
 
 # Main function
