@@ -36,7 +36,7 @@ K2 = 9.32975E-8
 ## DAC SET-UP
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
 dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize first MCP4725 - DAC
-dac = DAC.MCP4725(i2c, address=0x61)                                 # Initialize second MCP4725 - DAC
+dac2 = DAC.MCP4725(i2c, address=0x61)                                 # Initialize second MCP4725 - DAC
 
 ## ADC SET-UP
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)   # create the spi bus
@@ -51,7 +51,8 @@ Ki =  0.0                               # integral gain
 Kd =  0.0                               # derivative gain
 TARGET = 50                             # degrees
 SAMPLE_TIME = .5                        # seconds
-pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object
+pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
+pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
@@ -66,7 +67,7 @@ t1_timeList = []                        # creates an empty list of time values p
 t2_timeList = []                  
 # pid lists
 pidList = []                            # creates an empty list of pid outputs converted to voltage
-timeList2 = []                          # creates an empty list of time values per pid output value
+timeList = []                          # creates an empty list of time values per pid output value
 
 def convert_V_to_T(Vout):
     """
@@ -91,6 +92,14 @@ def convert_V_to_T(Vout):
     print('{:.3f}'.format(f) + " F")
 
     return(f)
+
+def convert_T_to_V(temp):
+    """
+    Takes a target temperature value in Fahrenheit and maps to a linear equation 
+    representing the steady-state voltage required to drive peltier
+    to reach that desired temperature. 
+    """
+    target_voltage = (71-target_out_temp)/27                       
 
 def adc_voltage(adc_counts):
     """Converts 16bit adc0 (0-65535) thermistor reading to 0-VS voltage value."""
@@ -169,65 +178,83 @@ def ctrlfunc():
 
     while True:
         starttime = time.time()
-        counter = counter + 1
 
-        #therm_changed = False                           # we'll assume that the thermistor didn't move
+        #therm_changed = False                          # we'll assume that the thermistor didn't move
         therm_changed = True
 
-        therm = chan0.value                             # read the analog pin
+        therm = chan0.value                             # read the analog pin of the first thermistor
+        therm2 = chan1.value                             # read the analog pin of the first thermistor
 
-        therm_adjust = abs(therm - last_read)           # how much has it changed since the last read?
+        #therm_adjust = abs(therm - last_read)           # how much has it changed since the last read?
 
-        if therm_adjust > tolerance:
-            therm_changed = True
+        #if therm_adjust > tolerance:
+        #    therm_changed = True
 
-        if therm_changed:
-            volts = adc_voltage(therm)
+        #if therm_changed:
+            
+        # Thermistor 1
+        volts = adc_voltage(therm)
+        degrees_f = round(convert_V_to_T(volts), 2)
+        elapsed_time = round(time.time() - start_time, 2)
 
-            degrees_f = round(convert_V_to_T(volts), 2)
-            elapsed_time = round(time.time() - start_time, 2)
+        t1_tempList.append(degrees_f)
+        t1_timeList.append(elapsed_time)
 
-            tempList.append(degrees_f)
-            timeList.append(elapsed_time)
+        # Thermistor 2
+        volts2 = adc_voltage(therm2)
+        degrees_f2 = round(convert_V_to_T(volts2), 2)
+        elapsed_time2 = round(time.time() - start_time, 2)
 
-            # print statements to console
-            print('Raw ADC Value: ', therm)
-            print('Raw Converted Voltage: ', str(volts) + ' Volts')
-            print('Time: ', str(elapsed_time) + ' seconds\n')
+        t2_tempList.append(degrees_f2)
+        t2_timeList.append(elapsed_time2)
+                 
+        # Print statements to console
+        print('T1 Raw ADC Value: ', therm)
+        print('T1 Raw Converted Voltage: ', str(volts) + ' Volts')
+        print('T1 Time: ', str(elapsed_time) + ' seconds\n')
+        
+        print('T2 Raw ADC Value: ', therm2)
+        print('T2 Raw Converted Voltage: ', str(volts2) + ' Volts')
+        print('T2 Time: ', str(elapsed_time2) + ' seconds\n')
+            
+        #last_read = therm                           # save the thermistor reading for the next loop
 
-            #last_read = therm                           # save the thermistor reading for the next loop
-
-
-        #counter = 50
-        if counter == 5:           # fix sample time
-            #degrees_f = 70
+        if counter == 5:                             # Sample time (.5) / Max process time (.1)
+            
+            # Thermistor 1
             pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
             target_out_temp = pelt_pid.output
-            print(target_out_temp)
-            target_voltage = (71-target_out_temp)/27
-            print(target_voltage)
-            dac_out = max(min(target_voltage, MAX_PELT), 0)                  # scales output to maximum voltage peltier can handle
-            dac.normalized_value = dac_out/MAX_DAC                    # Set pin output to desired voltage value
-            print(dac_out)
+            dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
+            dac.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
+            
             pidList.append(target_out_temp)
+            timeList.append(elapsed_time)
+            
+            # Thermistor 2
+            pelt_pid2.update(degrees_f2)                                       # update pid system with current thermistor temperature
+            target_out_temp2 = pelt_pid2.output
+            dac_out2 = max(min(convert_T_to_V(target_out_temp2), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
+            dac2.normalized_value = dac_out2/MAX_DAC                           # set pin output to desired voltage value
+            
+            pidList2.append(target_out_temp)
             timeList2.append(elapsed_time)
 
             counter = 0
 
         # end program after specified time in seconds
         if elapsed_time > DURATION:
-            graphData(tempList, timeList)
-            graphData2(pidList, timeList2)
+            graphData(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
+            graphData2(pidList, timeList)
             break
 
-        #time.sleep(0.5)                                 # hang out and do nothing for a half second
         endtime = time.time()
         processTime = endtime - starttime
-        #print(processTime)      # point .002
         sleeptime = .1 - processTime
-        if sleeptime < 0:
+        if sleeptime < 0:0
             sleeptime = 0
         time.sleep(sleeptime)
+        
+        counter = counter + 1
 
 
 # Main function
