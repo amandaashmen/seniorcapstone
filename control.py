@@ -22,7 +22,7 @@ except IndexError:
     FILENAME = input("Enter filename.\n")
 
 ## GLOBAL VARIABLES
-OUTPUT = 0                            # Volts
+OUTPUT = 0                              # Volts
 MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
 DURATION = 90                           # seconds
