@@ -68,6 +68,8 @@ t2_timeList = []
 # pid lists
 pidList = []                            # creates an empty list of pid outputs converted to voltage
 timeList = []                          # creates an empty list of time values per pid output value
+pidList2 = []                            # creates an empty list of pid outputs converted to voltage
+timeList2 = []                          # creates an empty list of time values per pid output value
 
 def convert_V_to_T(Vout):
     """
@@ -147,10 +149,10 @@ def graphData_two(dataList1, timeList1, dataList2, timeList2):
     plt.savefig(FILENAME+'.png')
     plt.show()
 
-def graphData_one(dataList, timeList):
+def graphData_one(dataList, timeList, file):
     """Creates csv file to write data to and plots graph of data for single input."""
 
-    with open(FILENAME+"_pid", mode='w', newline= '') as data:
+    with open(file+"_pid", mode='w', newline= '') as data:
             pidData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             pidData.writerow(["Time,    PID"])
 
@@ -168,7 +170,7 @@ def graphData_one(dataList, timeList):
     plt.xlabel('Time (s)')
     plt.title('PID Values')
     plt.plot(xList, yList)
-    plt.savefig(FILENAME+'_pid.png')
+    plt.savefig(file+'_pid.png')
     plt.show()
 
 def ctrlfunc():
@@ -244,7 +246,8 @@ def ctrlfunc():
         # end program after specified time in seconds
         if elapsed_time > DURATION:
             graphData(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
-            graphData2(pidList, timeList)
+            graphData2(pidList, timeList, FILENAME+'_1')
+            graphData2(pidList2, timeList2, FILENAME+'_2')
             break
 
         endtime = time.time()
