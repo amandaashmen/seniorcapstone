@@ -42,21 +42,31 @@ spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)   # create th
 cs = digitalio.DigitalInOut(board.D22)                               # create the chip select
 mcp = MCP.MCP3008(spi, cs)                                           # create the mcp object MCP3008 - ADC
 chan0 = AnalogIn(mcp, MCP.P0)                                        # create an analog input channel on pin 0
+chan1 = AnalogIn(mcp, MCP.P1)                                        # create an analog input channel on pin 1
 
 ## PID SET-UP
+Kp = 24.0                               # proportional gain
+Ki =  0.0                               # integral gain
+Kd =  0.0                               # derivative gain
 TARGET = 50                             # degrees
 SAMPLE_TIME = .5                        # seconds
-pelt_pid = PID(24.0, 0.0, 0.0, TARGET)   # create PID object
+pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object
 
-start_time = time.time()        # begin reading
-last_read = 0                   # this keeps track of the last value to keep from
-tolerance = 250                 # being jittery we'll only change voltage when the
-                                # thermistor has moved a significant amount on a 16-bit ADC
+start_time = time.time()                # begin reading
+last_read = 0                           # this keeps track of the last value to keep from
+tolerance = 250                         #  being jittery we'll only change voltage when the
+                                        #  thermistor has moved a significant amount on a 16-bit ADC
 
-tempList = []                   # creates an empty list of temperature values read
-timeList = []                   # creates an empty list of time values per temperature
-pidList = []
-timeList2 = []
+## GRAPH SET-UP
+# thermistor 1 and 2 lists
+t1_tempList = []                        # creates an empty list of temperature values read
+t2_tempList = []                   
+t1_timeList = []                        # creates an empty list of time values per temperature
+t2_timeList = []                  
+# pid lists
+pidList = []                            # creates an empty list of pid outputs converted to voltage
+timeList2 = []                          # creates an empty list of time values per pid output value
+
 def convert_V_to_T(Vout):
     """
     Takes a voltage value from amplifier to ADC, maps to internal resistance of
@@ -87,32 +97,48 @@ def adc_voltage(adc_counts):
     volts = (adc_counts*VS)/(adc_16bit)
     return volts
 
-def graphData(dataList, timeList):
-    """Creates csv file to write data to."""
+def graphData_two(dataList1, timeList1, dataList2, timeList2):
+    """Creates csv file to write data to and plots graph of data for two sets of inputs."""
 
-    with open(FILENAME, mode='w', newline= '') as data:
+    # Thermistor 1
+    with open(FILENAME+"_t1", mode='w', newline= '') as data:
             tempData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
             tempData.writerow(["Time,    Temperature"])
 
             xList = []
             yList = []
-            for point in range(len(dataList)):
-                temp = dataList[point]
-                time = timeList[point]
-
+            for point in range(len(dataList1)):
+                temp = dataList1[point]
+                time = timeList1[point]
+    
                 xList.append(time)
                 yList.append(temp)
+                tempData.writerow([time,temp])
+                
+    # Thermistor 2
+    with open(FILENAME+"_t2", mode='w', newline= '') as data:
+            tempData2 = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
+            tempData2.writerow(["Time,    Temperature"])
+
+            xList2 = []
+            yList2 = []
+            for point in range(len(dataList2)):
+                temp = dataList2[point]
+                time = timeList2[point]
+    
+                xList2.append(time)
+                yList2.append(temp)
                 tempData.writerow([time,temp])
 
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
-    plt.plot(xList, yList)
+    plt.plot(xList, yList, xList2, yList2)
     plt.savefig(FILENAME+'.png')
     plt.show()
 
-def graphData2(dataList2, timeList2):
-    """Creates csv file to write data to."""
+def graphData_one(dataList, timeList):
+    """Creates csv file to write data to and plots graph of data for single input."""
 
     with open(FILENAME+"_pid", mode='w', newline= '') as data:
             pidData = csv.writer(data, quoting=csv.QUOTE_MINIMAL)
