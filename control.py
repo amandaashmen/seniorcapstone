@@ -35,7 +35,8 @@ K2 = 9.32975E-8
 
 ## DAC SET-UP
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
-dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize MCP4725 - DAC
+dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize first MCP4725 - DAC
+dac = DAC.MCP4725(i2c, address=0x61)                                 # Initialize second MCP4725 - DAC
 
 ## ADC SET-UP
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)   # create the spi bus
