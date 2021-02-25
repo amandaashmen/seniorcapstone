@@ -99,9 +99,10 @@ def convert_T_to_V(temp):
     """
     Takes a target temperature value in Fahrenheit and maps to a linear equation 
     representing the steady-state voltage required to drive peltier
-    to reach that desired temperature. 
+    to reach that desired temperature.
+    Returns target voltage (Volts)
     """
-    target_voltage = (71-temp)/27                       
+    return (71-temp)/27        
 
 def adc_voltage(adc_counts):
     """Converts 16bit adc0 (0-65535) thermistor reading to 0-VS voltage value."""
