@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 LARGE_FONT= "Verdana 18 bold"
-SMALL_FONT= ("Verdana italic", 13)
+SMALL_FONT= "Verdana 13 italic"
 PASSWORD = "U"
 
 class ARDapp(Tk):
