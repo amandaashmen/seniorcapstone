@@ -71,6 +71,12 @@ timeList = []                           # creates an empty list of time values p
 pidList2 = []                           # creates an empty list of pid outputs converted to voltage
 timeList2 = []                          # creates an empty list of time values per pid output value
 
+
+def setTarget(temp):
+    global TARGET
+    TARGET = temp
+    print(TARGET)
+
 def convert_V_to_T(Vout):
     """
     Takes a voltage value from amplifier to ADC, maps to internal resistance of
