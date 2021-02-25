@@ -25,7 +25,7 @@ except IndexError:
 OUTPUT = 0                              # Volts
 MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
-DURATION = 30                           # seconds
+DURATION = 15                           # seconds
 VS = 5.79                               # Volts
 R1 = 145                                # Ohms
 # steinhart-hart coefficients
@@ -159,9 +159,9 @@ def graphData_one(dataList, timeList, file):
 
             xList = []
             yList = []
-            for point in range(len(dataList2)):
-                pid = dataList2[point]
-                time = timeList2[point]
+            for point in range(len(dataList)):
+                pid = dataList[point]
+                time = timeList[point]
 
                 xList.append(time)
                 yList.append(pid)
