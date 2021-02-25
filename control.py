@@ -25,9 +25,9 @@ except IndexError:
 OUTPUT = 0                              # Volts
 MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
-DURATION = 15                           # seconds
+DURATION = 45                           # seconds
 VS = 5.56                               # Volts
-R1 = 145                                # Ohms
+R1 = 151.2                                # kOhms
 # steinhart-hart coefficients
 K0 = 0.00113414
 K1 = 0.000233106
@@ -259,8 +259,8 @@ def ctrlfunc():
         # end program after specified time in seconds
         if elapsed_time > DURATION:
             graphData_two(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
-            graphData_one(pidList, timeList, FILENAME+'_1')
-            graphData_one(pidList2, timeList2, FILENAME+'_2')
+            #graphData_one(pidList, timeList, FILENAME+'_1')
+            #graphData_one(pidList2, timeList2, FILENAME+'_2')
             break
 
         endtime = time.time()
