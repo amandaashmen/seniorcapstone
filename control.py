@@ -149,6 +149,7 @@ def graphData_two(dataList1, timeList1, dataList2, timeList2):
     plt.title('Thermistor Values')
     plt.plot(xList, yList, label='Therm. 1')
     plt.plot(xList2, yList2, label='Therm. 2')
+    plt.legend()
     plt.savefig(FILENAME+'.png')
     plt.show()
 
