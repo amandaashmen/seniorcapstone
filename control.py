@@ -67,9 +67,9 @@ t1_timeList = []                        # creates an empty list of time values p
 t2_timeList = []                  
 # pid lists
 pidList = []                            # creates an empty list of pid outputs converted to voltage
+pidList2 = []                       
 timeList = []                           # creates an empty list of time values per pid output value
-pidList2 = []                           # creates an empty list of pid outputs converted to voltage
-timeList2 = []                          # creates an empty list of time values per pid output value
+timeList2 = []                   
 
 
 def setTarget(temp):
