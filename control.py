@@ -67,8 +67,8 @@ t1_timeList = []                        # creates an empty list of time values p
 t2_timeList = []                  
 # pid lists
 pidList = []                            # creates an empty list of pid outputs converted to voltage
-timeList = []                          # creates an empty list of time values per pid output value
-pidList2 = []                            # creates an empty list of pid outputs converted to voltage
+timeList = []                           # creates an empty list of time values per pid output value
+pidList2 = []                           # creates an empty list of pid outputs converted to voltage
 timeList2 = []                          # creates an empty list of time values per pid output value
 
 def convert_V_to_T(Vout):
@@ -147,7 +147,8 @@ def graphData_two(dataList1, timeList1, dataList2, timeList2):
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
-    plt.plot(xList, yList, xList2, yList2)
+    plt.plot(xList, yList, label='Therm. 1')
+    plt.plot(xList2, yList2, label='Therm. 2')
     plt.savefig(FILENAME+'.png')
     plt.show()
 
