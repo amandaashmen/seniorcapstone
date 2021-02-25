@@ -222,7 +222,3 @@ class EndPage(Frame):
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
         done.place(x=128, y=130)
-
-app = ARDapp()
-app.title("ARD Interface")
-app.mainloop()
