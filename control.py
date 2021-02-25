@@ -253,7 +253,7 @@ def ctrlfunc():
         endtime = time.time()
         processTime = endtime - starttime
         sleeptime = .1 - processTime
-        if sleeptime < 0:0
+        if sleeptime < 0:
             sleeptime = 0
         time.sleep(sleeptime)
         
