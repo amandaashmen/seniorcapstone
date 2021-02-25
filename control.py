@@ -141,7 +141,7 @@ def graphData_two(dataList1, timeList1, dataList2, timeList2):
     
                 xList2.append(time)
                 yList2.append(temp)
-                tempData.writerow([time,temp])
+                tempData2.writerow([time,temp])
 
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
