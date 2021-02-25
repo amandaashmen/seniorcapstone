@@ -240,15 +240,15 @@ def ctrlfunc():
             dac2.normalized_value = dac_out2/MAX_DAC                           # set pin output to desired voltage value
             
             pidList2.append(target_out_temp)
-            timeList2.append(elapsed_time)
+            timeList2.append(elapsed_time2)
 
             counter = 0
 
         # end program after specified time in seconds
         if elapsed_time > DURATION:
-            graphData(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
-            graphData2(pidList, timeList, FILENAME+'_1')
-            graphData2(pidList2, timeList2, FILENAME+'_2')
+            graphData_two(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
+            graphData_one(pidList, timeList, FILENAME+'_1')
+            graphData_one(pidList2, timeList2, FILENAME+'_2')
             break
 
         endtime = time.time()
