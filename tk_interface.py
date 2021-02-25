@@ -1,6 +1,7 @@
 import time
 from tkinter import *
 from tkinter import messagebox
+import control
 
 LARGE_FONT= "Verdana 18 bold"
 SMALL_FONT= "Verdana 13 italic"
@@ -125,10 +126,10 @@ class Custom(Frame):
         time_set = Label(self, text="Set Duration (min.)", font=SMALL_FONT)
         time_set.place(x=70,y=130)
 
-        tempEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=set_temp)
+        tempEntry= Entry(self, width=3, font=("Arial",18), textvariable=set_temp)
         tempEntry.place(x=260,y=90)
 
-        timeEntry= Entry(self, width=3, font=("Arial",18,""), textvariable=set_dur)
+        timeEntry= Entry(self, width=3, font=("Arial",18), textvariable=set_dur)
         timeEntry.place(x=260,y=130)
 
         back = Button(self, text="Back", command=lambda: controller.show_frame(Locked))
@@ -141,7 +142,8 @@ class Custom(Frame):
 class Confirm(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-
+        controller.setTarget(controller.temperature)            # set the target temperature for the PID system
+        
         minute = StringVar()
         second = StringVar()
         minute.set(controller.duration.get())
@@ -149,6 +151,9 @@ class Confirm(Frame):
 
         current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
+        # FIX instead of 70, make it the avg thermistor readings
+        # therm_temp = Label(self, font=SMALL_FONT, textvariable= control.getcurrentTemp) # ()?
+        # therm_temp.place(x= 140, y = 110)
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
