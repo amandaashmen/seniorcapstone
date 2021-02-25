@@ -245,7 +245,7 @@ def ctrlfunc():
             dac2.normalized_value = dac_out2/MAX_DAC                           # set pin output to desired voltage value
             
             pidList2.append(target_out_temp)
-            timeList2.append(elapsed_time2)
+            timeList2.append(elapsed_time)
 
             counter = 0
 
