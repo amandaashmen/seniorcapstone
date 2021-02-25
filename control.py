@@ -75,7 +75,8 @@ def convert_V_to_T(Vout):
     """
     Takes a voltage value from amplifier to ADC, maps to internal resistance of
     thermistor, calculates temperature in Celcius and Fahrenheit from
-    Steinhart-Hart Equation. Returns temperature value in Fahrenheit.
+    Steinhart-Hart Equation. Prints Resistance (kOhms) and Temperature (F).
+    Returns temperature value in Fahrenheit.
     """
     # voltage to resistance
     GAIN = 2.68-0.154*Vout
@@ -194,11 +195,13 @@ def ctrlfunc():
         #    therm_changed = True
 
         #if therm_changed:
-            
+           
+        elapsed_time = round(time.time() - start_time, 2)
+        
         # Thermistor 1
         volts = adc_voltage(therm)
         degrees_f = round(convert_V_to_T(volts), 2)
-        elapsed_time = round(time.time() - start_time, 2)
+        #elapsed_time = round(time.time() - start_time, 2)
 
         t1_tempList.append(degrees_f)
         t1_timeList.append(elapsed_time)
@@ -206,19 +209,20 @@ def ctrlfunc():
         # Thermistor 2
         volts2 = adc_voltage(therm2)
         degrees_f2 = round(convert_V_to_T(volts2), 2)
-        elapsed_time2 = round(time.time() - start_time, 2)
+        #elapsed_time2 = round(time.time() - start_time, 2)
 
         t2_tempList.append(degrees_f2)
-        t2_timeList.append(elapsed_time2)
+        t2_timeList.append(elapsed_time)
                  
         # Print statements to console
         print('T1 Raw ADC Value: ', therm)
         print('T1 Raw Converted Voltage: ', str(volts) + ' Volts')
-        print('T1 Time: ', str(elapsed_time) + ' seconds\n')
         
         print('T2 Raw ADC Value: ', therm2)
         print('T2 Raw Converted Voltage: ', str(volts2) + ' Volts')
-        print('T2 Time: ', str(elapsed_time2) + ' seconds\n')
+        
+        print('T1 Time: ', str(elapsed_time) + ' seconds\n')
+        #print('T2 Time: ', str(elapsed_time2) + ' seconds\n')
             
         #last_read = therm                           # save the thermistor reading for the next loop
 
