@@ -1,7 +1,7 @@
 # i am not sure if i need moving average
 # initializing degrees f if using tolerance
 # not sure if i need counter
-# eventually cut duration?
+# eventually replace duration ith termination from interface
 import os
 import sys
 import csv
