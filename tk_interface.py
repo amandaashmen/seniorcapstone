@@ -142,7 +142,10 @@ class Custom(Frame):
 class Confirm(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        
+        ## Need to do these when its time, not upon initial load
         controller.setTarget(controller.temperature)            # set the target temperature for the PID system
+        controller.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously
         
         minute = StringVar()
         second = StringVar()
@@ -152,7 +155,7 @@ class Confirm(Frame):
         current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
         # FIX instead of 70, make it the avg thermistor readings
-        # therm_temp = Label(self, font=SMALL_FONT, textvariable= control.getcurrentTemp) # ()?
+        # therm_temp = Label(self, font=SMALL_FONT, textvariable= control.getAverage) # ()?
         # therm_temp.place(x= 140, y = 110)
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
