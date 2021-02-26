@@ -188,7 +188,7 @@ def graphData_one(dataList, timeList, file):
     plt.savefig(file+'_pid.png')
     plt.show()
     
-def getAverage(temp1, temp2):
+def getAverage():
     """ 
     Returns the average temperature of the two thermistors
     """
