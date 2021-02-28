@@ -37,6 +37,11 @@ class ARDapp(Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+        
+        self.average = StringVar()
+    def getAverageTemp():
+        self.average += 1
+        return self.average
 
 class StartPage(Frame):
 
@@ -155,7 +160,7 @@ class Confirm(Frame):
         current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
         # FIX instead of 70, make it the avg thermistor readings
-        # therm_temp = Label(self, font=SMALL_FONT, textvariable= control.getAverage) # ()? need to update constantly
+        therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.getAverageTemp) # ()? need to update constantly
         # therm_temp.place(x= 140, y = 110)
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
