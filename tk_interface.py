@@ -39,7 +39,7 @@ class ARDapp(Tk):
         frame = self.frames[cont]
         frame.tkraise()
         
-    def getAverageTemp(hello):
+    def getAverageTemp(self, hello):
         self.average.set(5)
         print(self.average.get())
         print('testingg')
