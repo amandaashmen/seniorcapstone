@@ -104,7 +104,7 @@ def convert_V_to_T(Vout):
 
     return(f)   
 
-def adc_to_degreesf(value):
+def adc_to_degrees(value):
     """
     Given a value from an ADC, converts value to voltage then 
     converts that voltage to temperature in Fahrenheit.
