@@ -247,7 +247,7 @@ def ctrlfunc():
         t1_timeList.append(elapsed_time)
 
         # Thermistor 2
-        degrees_f2 = adc_to_degrees(ther2m)
+        degrees_f2 = adc_to_degrees(therm2)
         #volts2 = adc_voltage(therm2)
         #degrees_f2 = round(convert_V_to_T(volts2), 2)
         #elapsed_time2 = round(time.time() - start_time, 2)
