@@ -202,7 +202,6 @@ def setTarget(temp):
     """
     global TARGET
     TARGET = temp
-    print(TARGET)       # REMOVE
     
 def updatePID(current_temp):
     """
