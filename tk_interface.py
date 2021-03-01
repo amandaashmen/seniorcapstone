@@ -21,6 +21,15 @@ class ARDapp(Tk):
         # shared variables across frames
         self.temperature = StringVar()
         self.duration = StringVar()
+        self.average = StringVar()
+        
+        def getAverageTemp():
+            self.average.set(5)
+            print(self.average.get())
+            print('testingg')
+            print(control.getAverage())
+            return self.average.get()
+
 
         self.frames = {}
 
@@ -38,14 +47,7 @@ class ARDapp(Tk):
         frame = self.frames[cont]
         frame.tkraise()
         
-        self.average = StringVar()
-    def getAverageTemp():
-        self.average.set(5)
-        print(self.average.get())
-        print('testingg')
-        print(control.getAverage())
-        return self.average.get()
-
+        
 class StartPage(Frame):
 
     def __init__(self, parent, controller):
