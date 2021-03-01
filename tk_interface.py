@@ -149,8 +149,8 @@ class Confirm(Frame):
         Frame.__init__(self, parent)
         
         ## Need to do these when its time, not upon initial load
-        controller.setTarget(controller.temperature)            # set the target temperature for the PID system
-        controller.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously
+        #control.setTarget(controller.temperature)            # set the target temperature for the PID system
+        #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously
         
         minute = StringVar()
         second = StringVar()
