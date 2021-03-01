@@ -40,7 +40,7 @@ class ARDapp(Tk):
         
         self.average = StringVar()
     def getAverageTemp():
-        self.average += 1
+        self.average.set(5)
         print(control.getAverage())
         return self.average
 
