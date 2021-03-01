@@ -208,7 +208,7 @@ class Confirm(Frame):
                 temp -= 1
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
-        title.place(x=100,y=30)
+        title.place(x=140,y=30)
 
         back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
         back.place(x=70, y=250)
