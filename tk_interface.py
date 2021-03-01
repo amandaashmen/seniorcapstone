@@ -180,7 +180,7 @@ class Confirm(Frame):
 
         def submit():
             ## Need to do these when its time, not upon initial load
-            control.setTarget(controller.temperature)            # set the target temperature for the PID system
+            control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get())
             while temp >-1:
