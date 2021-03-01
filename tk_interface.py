@@ -114,7 +114,7 @@ class Custom(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         label = Label(self, text="Custom Setting", font=LARGE_FONT)
-        label.place(x=50,y=15)
+        label.place(x=80,y=15)
 
         set_temp = StringVar()
         set_dur = StringVar()
@@ -208,7 +208,7 @@ class Confirm(Frame):
                 temp -= 1
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
-        title.place(x=50,y=30)
+        title.place(x=100,y=30)
 
         back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
         back.place(x=70, y=250)
@@ -222,7 +222,7 @@ class EndPage(Frame):
         Frame.__init__(self, parent)
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
-        label.place(x=100, y=15)
+        label.place(x=60, y=15)
 
         mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
         mode.place(x=131,y=90)
