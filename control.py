@@ -110,7 +110,7 @@ def adc_to_degrees(value):
     converts that voltage to temperature in Fahrenheit.
     Returns rounded value in degrees F.
     """
-    volts = adc_voltage(therm)
+    volts = adc_voltage(value)
     return round(convert_V_to_T(volts), 2)
 
 def convert_T_to_V(temp):
