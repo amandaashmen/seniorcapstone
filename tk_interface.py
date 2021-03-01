@@ -23,14 +23,6 @@ class ARDapp(Tk):
         self.duration = StringVar()
         self.average = StringVar()
         
-        def getAverageTemp():
-            self.average.set(5)
-            print(self.average.get())
-            print('testingg')
-            print(control.getAverage())
-            return self.average.get()
-
-
         self.frames = {}
 
         for F in (StartPage, Modes, Locked, Custom, Confirm, EndPage):
@@ -46,6 +38,14 @@ class ARDapp(Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+        
+    def getAverageTemp():
+        self.average.set(5)
+        print(self.average.get())
+        print('testingg')
+        print(control.getAverage())
+        return self.average.get()
+
         
         
 class StartPage(Frame):
