@@ -41,6 +41,7 @@ class ARDapp(Tk):
         self.average = StringVar()
     def getAverageTemp():
         self.average += 1
+        print(control.getAverage())
         return self.average
 
 class StartPage(Frame):
@@ -147,11 +148,7 @@ class Custom(Frame):
 class Confirm(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        
-        ## Need to do these when its time, not upon initial load
-        control.setTarget(controller.temperature)            # set the target temperature for the PID system
-        #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously
-        
+                
         minute = StringVar()
         second = StringVar()
         minute.set(controller.duration.get())
@@ -182,6 +179,9 @@ class Confirm(Frame):
         secondLabel.place(x=196,y=170)
 
         def submit():
+            ## Need to do these when its time, not upon initial load
+            control.setTarget(controller.temperature)            # set the target temperature for the PID system
+            #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get())
             while temp >-1:
                 
