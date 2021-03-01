@@ -41,8 +41,10 @@ class ARDapp(Tk):
         self.average = StringVar()
     def getAverageTemp():
         self.average.set(5)
+        print(self.average.get())
+        print('testingg')
         print(control.getAverage())
-        return self.average
+        return self.average.get()
 
 class StartPage(Frame):
 
