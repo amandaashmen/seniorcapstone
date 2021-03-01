@@ -159,8 +159,11 @@ class Confirm(Frame):
         current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
         # FIX instead of 70, make it the avg thermistor readings
+        controller.getAverageTemp()
         therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.getAverageTemp) # ()? need to update constantly
         therm_temp.place(x= 140, y = 110)
+        therm_temp2 = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
+        therm_temp.place(x= 170, y = 110)
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
