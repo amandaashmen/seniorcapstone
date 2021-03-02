@@ -263,12 +263,12 @@ def ctrlfunc():
         print('T1 Time: ', str(elapsed_time) + ' seconds\n')
         
         print("THERMISTOR 1")
-        printStats(therm)
+        printStats(therm, 1)
         #print('T1 Raw ADC Value: ', therm)
         #print('T1 Raw Converted Voltage: ', str(volts) + ' Volts')
         
         print("THERMISTOR 2")
-        printStats(therm2)
+        printStats(therm2, 2)
         #print('T2 Raw ADC Value: ', therm2)
         #print('T2 Raw Converted Voltage: ', str(volts2) + ' Volts')
 
