@@ -47,6 +47,7 @@ cs = digitalio.DigitalInOut(board.D22)                               # create th
 mcp = MCP.MCP3008(spi, cs)                                           # create the mcp object MCP3008 - ADC
 chan0 = AnalogIn(mcp, MCP.P0)                                        # create an analog input channel on pin 0
 chan1 = AnalogIn(mcp, MCP.P1)                                        # create an analog input channel on pin 1
+ADC_MAX = 65535
 
 ## PID SET-UP
 Kp = 24.0                               # proportional gain
@@ -81,7 +82,7 @@ def adc_voltage(adc_counts):
     volts = (adc_counts*VS)/(adc_16bit)
     return volts
 
-def convert_V_to_T(Vout, therm):
+def convert_V_to_T(adc_value, therm):
     """
     Takes a voltage value from amplifier to ADC, maps to internal resistance of
     thermistor, calculates temperature in Celcius and Fahrenheit from
@@ -89,9 +90,9 @@ def convert_V_to_T(Vout, therm):
     Returns temperature value in Fahrenheit.
     """
     if therm == 1:
-        GAIN = 2.631-0.157*Vout
+        GAIN = 2.754-1.041*(adc_value/ADC_MAX)
     else:
-        GAIN = 2.647-0.153*Vout
+        GAIN = 2.766-1.006*(adc_value/ADC_MAX)
     R = (VS*R1)/((1/GAIN)*Vout + (VS/2)) - R1
     print('Resistance: ', str(R) + ' kOhms')
 
@@ -114,8 +115,8 @@ def adc_to_degrees(value, therm):
     converts that voltage to temperature in Fahrenheit.
     Returns rounded value in degrees F.
     """
-    volts = adc_voltage(value)
-    return round(convert_V_to_T(volts, therm), 2)
+    #volts = adc_voltage(value)
+    return round(convert_V_to_T(value, therm), 2)
 
 def convert_T_to_V(temp):
     """
@@ -223,10 +224,10 @@ def printStats(channel, therm):
     """
     Prints to console the thermistor ADC value, voltage, and temperature.
     """
-    volts = adc_voltage(channel)
+    #volts = adc_voltage(channel)
     print('Raw ADC Value: ', channel)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
-    print('Current Temperature: '+'{:.3f}'.format(convert_V_to_T(volts, therm)) + " F")
+    print('Current Temperature: '+'{:.3f}'.format(convert_V_to_T(channel, therm)) + " F")
 
 def ctrlfunc():
     counter = 0
