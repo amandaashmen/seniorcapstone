@@ -219,14 +219,14 @@ def updatePID(current_temp, pelt, dac_no, therm):
     #dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
     dac_no.normalized_value = 0.0
     
-def printStats(channel):
+def printStats(channel, therm):
     """
     Prints to console the thermistor ADC value, voltage, and temperature.
     """
     volts = adc_voltage(channel)
     print('Raw ADC Value: ', channel)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
-    print('Current Temperature: '+'{:.3f}'.format(convert_V_to_T(volts)) + " F")
+    print('Current Temperature: '+'{:.3f}'.format(convert_V_to_T(volts, therm)) + " F")
 
 def ctrlfunc():
     counter = 0
