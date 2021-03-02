@@ -214,7 +214,8 @@ def updatePID(current_temp, pelt, dac_no):
     pelt.update(current_temp)                                    # update pid system with current thermistor temperature
     target_out_temp = pelt.output
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
-    dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
+    #dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
+    dac_no.normalized_value = 0.0
     
 def printStats(channel):
     """
@@ -298,8 +299,8 @@ def ctrlfunc():
             graphData_two(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
             #graphData_one(pidList, timeList, FILENAME+'_1')
             #graphData_one(pidList2, timeList2, FILENAME+'_2')
-            dac.normalized_value = 0
-            dac2.normalized_value = 0
+            dac.normalized_value = 0.0
+            dac2.normalized_value = 0.0
             break
 
         endtime = time.time()
