@@ -27,7 +27,7 @@ OUTPUT = 0                              # Volts
 MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
 DURATION = 45                           # seconds
-VS = 5.56                               # Volts
+VS = 10                               # Volts
 R1 = 151.2                                # kOhms
 # steinhart-hart coefficients
 K0 = 0.00113414
