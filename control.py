@@ -93,6 +93,7 @@ def convert_V_to_T(adc_value, therm):
         GAIN = 2.754-1.041*(adc_value/ADC_MAX)
     else:
         GAIN = 2.766-1.006*(adc_value/ADC_MAX)
+    Vout = adc_voltage(adc_value)
     R = (VS*R1)/((1/GAIN)*Vout + (VS/2)) - R1
     print('Resistance: ', str(R) + ' kOhms')
 
