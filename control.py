@@ -26,7 +26,7 @@ except IndexError:
 OUTPUT = 0                              # Volts
 MAX_DAC = 3.78                          # Volts
 MAX_PELT = 2.5                          # Volts
-DURATION = 45                           # seconds
+DURATION = 90                           # seconds
 VS = 5.9                               # Volts
 R1 = 151.2                                # kOhms
 # steinhart-hart coefficients
