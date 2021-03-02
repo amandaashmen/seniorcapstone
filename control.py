@@ -314,4 +314,6 @@ def ctrlfunc():
 
 # Main function
 if __name__ == "__main__":
-    ctrlfunc()
+    #ctrlfunc()
+    dac.normalized_value = 0.0
+    dac2.normalized_value = 0.0
