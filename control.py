@@ -36,8 +36,10 @@ K2 = 9.32975E-8
 
 ## DAC SET-UP
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
-dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize first MCP4725 - DAC
-dac2 = DAC.MCP4725(i2c, address=0x61)                                 # Initialize second MCP4725 - DAC
+dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize MCP4725 - DAC objects
+dac2 = DAC.MCP4725(i2c, address=0x61)                               
+dac.normalized_value = 0                                             # Initialize DAC outputs to 0 Volts
+dac2.normalized_value = 0
 
 ## ADC SET-UP
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)   # create the spi bus
@@ -203,16 +205,16 @@ def setTarget(temp):
     global TARGET
     TARGET = temp
     
-def updatePID(current_temp):
+def updatePID(current_temp, pelt, dac_no):
     """
     Given degrees of a thermistor in Fahrenheit, sets the PID system to 
     compute a new output target temperature, which is converted to a 
     voltage to drive the peltier unit. 
     """
-    pelt_pid.update(current_temp)                                    # update pid system with current thermistor temperature
-    target_out_temp = pelt_pid.output
+    pelt.update(current_temp)                                    # update pid system with current thermistor temperature
+    target_out_temp = pelt.output
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
-    dac.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
+    dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
     
 def printStats(channel):
     """
@@ -270,7 +272,7 @@ def ctrlfunc():
         if counter == 5:                             # Sample time (.5) / Max process time (.1)
             
             # Thermistor 1
-            updatePID(degrees_f)
+            updatePID(degrees_f, pelt_pid, dac)
             #pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
             target_out_temp = pelt_pid.output
             #dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
@@ -280,7 +282,7 @@ def ctrlfunc():
             timeList.append(elapsed_time)
             
             # Thermistor 2
-            updatePID(degrees_f2)
+            updatePID(degrees_f2, pelt_pid2, dac2)
             #pelt_pid2.update(degrees_f2)                                       # update pid system with current thermistor temperature
             target_out_temp2 = pelt_pid2.output
             #dac_out2 = max(min(convert_T_to_V(target_out_temp2), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
@@ -296,6 +298,8 @@ def ctrlfunc():
             graphData_two(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
             #graphData_one(pidList, timeList, FILENAME+'_1')
             #graphData_one(pidList2, timeList2, FILENAME+'_2')
+            dac.normalized_value = 0
+            dac2.normalized_value = 0
             break
 
         endtime = time.time()
