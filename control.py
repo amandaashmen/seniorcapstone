@@ -227,6 +227,7 @@ def printStats(channel, therm):
     """
     #volts = adc_voltage(channel)
     print('Raw ADC Value: ', channel)
+    volts = adc_voltage(channel)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
     print('Current Temperature: '+'{:.3f}'.format(convert_V_to_T(channel, therm)) + " F")
 
