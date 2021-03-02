@@ -88,7 +88,7 @@ def convert_V_to_T(Vout, therm):
     Steinhart-Hart Equation. Prints Resistance (kOhms) and Temperature (F).
     Returns temperature value in Fahrenheit.
     """
-    if therm = 1:
+    if therm == 1:
         GAIN = 2.631-0.157*Vout
     else:
         GAIN = 2.647-0.153*Vout
