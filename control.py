@@ -274,21 +274,21 @@ def ctrlfunc():
             # Thermistor 1
             updatePID(degrees_f, pelt_pid, dac)
             #pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
-            target_out_temp = pelt_pid.output
+            #target_out_temp = pelt_pid.output
             #dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
             #dac.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
             
-            pidList.append(target_out_temp)
+            pidList.append(pelt_pid.output)
             timeList.append(elapsed_time)
             
             # Thermistor 2
             updatePID(degrees_f2, pelt_pid2, dac2)
             #pelt_pid2.update(degrees_f2)                                       # update pid system with current thermistor temperature
-            target_out_temp2 = pelt_pid2.output
+            #target_out_temp2 = pelt_pid2.output
             #dac_out2 = max(min(convert_T_to_V(target_out_temp2), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
             #dac2.normalized_value = dac_out2/MAX_DAC                           # set pin output to desired voltage value
             
-            pidList2.append(target_out_temp)
+            pidList2.append(pelt_pid2.output)
             timeList2.append(elapsed_time)
 
             counter = 0
