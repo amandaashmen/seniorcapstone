@@ -283,7 +283,7 @@ def ctrlfunc():
             #target_out_temp = pelt_pid.output
             #dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
             #dac.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
-            dac.normalized_value = 2.5/MAX_DAC
+            dac.normalized_value = 0/MAX_DAC
             
             ##pidList.append(pelt_pid.output)
             ##timeList.append(elapsed_time)
