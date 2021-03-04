@@ -45,6 +45,7 @@ class ARDapp(Tk):
         print('testingg')
         print(hello)
         print(control.getAverage())
+        self.average.set(control.getAverage()+control.getAverage())
         return self.average.get()
 
         
@@ -162,7 +163,7 @@ class Confirm(Frame):
         current_temp = Label(self, text="Current Temperature: 70", fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
         # FIX instead of 70, make it the avg thermistor readings
-        controller.getAverageTemp('hi')
+        
         therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.getAverageTemp) # ()? need to update constantly
         therm_temp.place(x= 140, y = 110)
         therm_temp2 = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
@@ -192,6 +193,8 @@ class Confirm(Frame):
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get())
             while temp >-1:
+                controller.getAverageTemp('hi')#fix
+                therm_temp2['text'] = controller.average
                 
                 mins,secs = divmod(temp,60)
 
