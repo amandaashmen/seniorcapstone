@@ -48,7 +48,7 @@ while False:
     for i in range(4095, -1, -1):
         dac.raw_value = i
 
-dac.normalized_value = voltage/3.55
+dac.normalized_value = 0/3.55
 
 # done with library, free up resources & return back to default
 GPIO.cleanup()
