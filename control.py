@@ -218,8 +218,8 @@ def updatePID(current_temp, pelt, dac_no, therm):
     pelt.update(current_temp)                                    # update pid system with current thermistor temperature
     target_out_temp = pelt.output
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
-    #dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
-    dac_no.normalized_value = 0.0
+    dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
+    #dac_no.normalized_value = 0.0
     
 def printStats(channel, therm):
     """
@@ -278,23 +278,23 @@ def ctrlfunc():
         if counter == 5:                             # Sample time (.5) / Max process time (.1)
             
             # Thermistor 1
-            ##updatePID(degrees_f, pelt_pid, dac, 1)
+            updatePID(degrees_f, pelt_pid, dac, 1)
             #pelt_pid.update(degrees_f)                                       # update pid system with current thermistor temperature
             #target_out_temp = pelt_pid.output
             #dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
             #dac.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
-            dac.normalized_value = 2.5/MAX_DAC
+            #dac.normalized_value = 2.5/MAX_DAC
             
             ##pidList.append(pelt_pid.output)
             ##timeList.append(elapsed_time)
             
             # Thermistor 2
-            ##updatePID(degrees_f2, pelt_pid2, dac2, 2)
+            updatePID(degrees_f2, pelt_pid2, dac2, 2)
             #pelt_pid2.update(degrees_f2)                                       # update pid system with current thermistor temperature
             #target_out_temp2 = pelt_pid2.output
             #dac_out2 = max(min(convert_T_to_V(target_out_temp2), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
             #dac2.normalized_value = dac_out2/MAX_DAC                           # set pin output to desired voltage value
-            dac2.normalized_value = 2.5/MAX_DAC
+            #dac2.normalized_value = 2.5/MAX_DAC
             
             ##pidList2.append(pelt_pid2.output)
             ##timeList2.append(elapsed_time)
@@ -306,8 +306,8 @@ def ctrlfunc():
             dac.normalized_value = 0.0
             dac2.normalized_value = 0.0
             graphData_two(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
-            #graphData_one(pidList, timeList, FILENAME+'_1')
-            #graphData_one(pidList2, timeList2, FILENAME+'_2')
+            graphData_one(pidList, timeList, FILENAME+'_1')
+            graphData_one(pidList2, timeList2, FILENAME+'_2')
             break
 
         endtime = time.time()
