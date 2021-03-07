@@ -95,7 +95,7 @@ def convert_V_to_T(adc_value, therm):
         GAIN = 2.766-1.006*(adc_value/ADC_MAX)
     Vout = adc_voltage(adc_value)
     R = (VS*R1)/((1/GAIN)*Vout + (VS/2)) - R1
-    print('Resistance: ', str(R) + ' kOhms')
+    #print('Resistance: ', str(R) + ' kOhms')
 
     # resistance to temperature: Steinhart-Hart Equation
     term1 = K0
@@ -217,6 +217,8 @@ def updatePID(current_temp, pelt, dac_no, therm):
     """
     pelt.update(current_temp)                                    # update pid system with current thermistor temperature
     target_out_temp = pelt.output
+    print(therm)
+    print(target_out_temp)
     print(convert_T_to_V(target_out_temp))
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0) # scales output to maximum voltage peltier can handle
     dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
