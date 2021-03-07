@@ -49,7 +49,7 @@ while False:
     for i in range(4095, -1, -1):
         dac.raw_value = i
 
-dac.normalized_value = 0/3.55
+dac.normalized_value = 2.5/3.55
 
 dac2.normalized_value = 0/3.55
 
