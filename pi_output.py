@@ -20,6 +20,7 @@ i2c = busio.I2C(3, 2)
 
 # Initialize MCP4725.
 dac = adafruit_mcp4725.MCP4725(i2c, address=0x60)
+dac2 = adafruit_mcp4725.MCP4725(i2c, address=0x61)
 
 # There are a three ways to set the DAC output:
 #dac.value = 65535  # Use the value property with a 16-bit number just like
@@ -49,6 +50,8 @@ while False:
         dac.raw_value = i
 
 dac.normalized_value = 0/3.55
+
+dac2.normalized_value = 0/3.55
 
 # done with library, free up resources & return back to default
 GPIO.cleanup()
