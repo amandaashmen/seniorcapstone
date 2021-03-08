@@ -45,7 +45,7 @@ class ARDapp(Tk):
         #print('testingg')
         #print(hello)
         #print(control.getAverage())
-        self.average.set(control.getAverage())     
+        self.average.set(round(control.getAverage(), 3))     
         
 class StartPage(Frame):
 
