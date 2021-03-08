@@ -158,16 +158,6 @@ class Confirm(Frame):
         minute.set(controller.duration.get())
         second.set("00")
 
-        current_temp = Label(self, text="Current Temperature:", fg="navy", font=SMALL_FONT)
-        current_temp.place(x=100,y=110)
-        # FIX instead of 70, make it the avg thermistor readings
-        
-        #controller.getAverageTemp()
-        therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.getAverageTemp) # ()? need to update constantly
-        therm_temp.place(x= 140, y = 110)
-        therm_temp2 = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
-        therm_temp2.place(x= 210, y = 110)
-
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
 
@@ -188,9 +178,14 @@ class Confirm(Frame):
 
         def submit():
             ## Need to do these when its time, not upon initial load
+            current_temp = Label(self, text="Current Temperature:", fg="navy", font=SMALL_FONT)
+            current_temp.place(x=100,y=110)
+
+            therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
+            therm_temp.place(x= 260, y = 110)
             control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
-            temp = int(controller.duration.get())*60 + int(second.get())
+            temp = int(controller.duration.get())*60 + int(second.get()) 
             while temp >-1:
                 therm_temp2['text'] = controller.getAverageTemp()
                 
