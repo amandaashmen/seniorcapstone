@@ -1,7 +1,7 @@
 import time
 from tkinter import *
 from tkinter import messagebox
-import control
+import control_tk
 
 LARGE_FONT= "Verdana 18 bold"
 SMALL_FONT= "Verdana 13 italic"
@@ -184,9 +184,13 @@ class Confirm(Frame):
             therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average)
             therm_temp.place(x= 300, y = 140)
             control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
-            #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
+            
+            startTime = time.time()
+            counter = 0
             temp = int(controller.duration.get())*60 + int(second.get()) 
             while temp >-1:
+                control.ctrlfunc(startTime, counter)                               # controls PID system for peltiers
+                
                 therm_temp['text'] = controller.getAverageTemp()
                 
                 mins,secs = divmod(temp,60)
@@ -208,8 +212,9 @@ class Confirm(Frame):
                 if (temp == 0):
                     messagebox.showinfo("Time Countdown", "Time's up ")
                 
-                # after every one sec the value of temp will be decremented
+                # after every one sec the value of temp will be decremented and counter incremented
                 temp -= 1
+                counter += 1
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.place(x=145,y=30)
