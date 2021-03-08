@@ -57,6 +57,7 @@ TARGET = 50                             # degrees
 SAMPLE_TIME = .5                        # seconds
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
+print(pelt_pid2.SetPoint)
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
