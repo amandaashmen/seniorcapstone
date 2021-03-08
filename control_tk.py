@@ -208,14 +208,14 @@ def ctrlfunc(starttime, counter):
         
         counter = 0
         
-     endtime = time.time()
-     processTime = endtime - starttime
-     sleeptime = .1 - processTime
-     if sleeptime < 0:
+    endtime = time.time()
+    processTime = endtime - starttime
+    sleeptime = .1 - processTime
+    if sleeptime < 0:
         sleeptime = 0
-     time.sleep(sleeptime)
+    time.sleep(sleeptime)
         
-     counter = counter + 1
+    counter = counter + 1
 
 def endProgram:
     """When called, sets DAC output to 0 to turn off peltiers and produces graph of temperatures."""
