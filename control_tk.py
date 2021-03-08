@@ -133,10 +133,9 @@ def graphData(dataList1, timeList1, dataList2, timeList2):
          temp = dataList2[point]
          time = timeList2[point]
     
-                xList2.append(time)
-                yList2.append(temp)
-                tempData2.writerow([time,temp])
-
+         xList2.append(time)
+         yList2.append(temp)
+         
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
