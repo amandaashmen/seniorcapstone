@@ -1,7 +1,7 @@
 import time
 from tkinter import *
 from tkinter import messagebox
-import control_tk
+import control_tk as control
 
 LARGE_FONT= "Verdana 18 bold"
 SMALL_FONT= "Verdana 13 italic"
