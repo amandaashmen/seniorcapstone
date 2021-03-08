@@ -240,6 +240,8 @@ def ctrlfunc():
     counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
     pelt_pid.setSetPoint(TARGET)
+    pelt_pid2.setSampleTime(SAMPLE_TIME)
+    pelt_pid2.setSetPoint(TARGET)
 
     while True:
         starttime = time.time()
