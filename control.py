@@ -54,7 +54,7 @@ Kp = 10000.0                               # proportional gain
 Ki =  0.0                               # integral gain
 Kd =  0.0                               # derivative gain
 TARGET = 50                             # degrees
-SAMPLE_TIME = 2                         # seconds
+SAMPLE_TIME = 1                         # seconds
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
 print(pelt_pid2.SetPoint)
@@ -282,7 +282,7 @@ def ctrlfunc():
         #print('T2 Raw ADC Value: ', therm2)
         #print('T2 Raw Converted Voltage: ', str(volts2) + ' Volts')
 
-        if counter == 20:                             # Sample time (.5) / Max process time (.1)
+        if counter == 10:                             # Sample time (.5) / Max process time (.1)
             
             # Thermistor 1
             updatePID(degrees_f, pelt_pid, dac, 1)
