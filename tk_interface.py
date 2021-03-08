@@ -215,6 +215,9 @@ class Confirm(Frame):
                 # after every one sec the value of temp will be decremented and counter incremented
                 temp -= 1
                 counter += 1
+                
+                if temp == -1:
+                    control.endProgram
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.place(x=145,y=30)
