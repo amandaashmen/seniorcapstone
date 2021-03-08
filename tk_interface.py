@@ -182,7 +182,7 @@ class Confirm(Frame):
             current_temp.place(x=100,y=140)
 
             therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average)
-            therm_temp.place(x= 280, y = 140)
+            therm_temp.place(x= 300, y = 140)
             control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get()) 
