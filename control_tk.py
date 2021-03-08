@@ -48,7 +48,6 @@ ADC_MAX = 65535
 Kp = 1000.0                               # proportional gain
 Ki =  0.0                               # integral gain
 Kd =  0.0                               # derivative gain
-TARGET = 55                             # degrees
 SAMPLE_TIME = 1                         # seconds
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
@@ -158,7 +157,7 @@ def setTarget(temp):
     Sets the target temperature for the system to approach.
     """
     global TARGET
-    TARGET = temp
+    TARGET = int(temp)      # remove if necessary
     
 def updatePID(current_temp, pelt, dac_no, therm):
     """
@@ -175,9 +174,9 @@ def updatePID(current_temp, pelt, dac_no, therm):
 def ctrlfunc(starttime, counter):
     #counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
-    pelt_pid.setSetPoint(TARGET)
+    pelt_pid.setSetPoint(int(TARGET))
     pelt_pid2.setSampleTime(SAMPLE_TIME)
-    pelt_pid2.setSetPoint(TARGET)
+    pelt_pid2.setSetPoint(int(TARGET))
 
     #starttime = time.time()
 
