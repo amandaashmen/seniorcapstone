@@ -50,7 +50,7 @@ chan1 = AnalogIn(mcp, MCP.P1)                                        # create an
 ADC_MAX = 65535
 
 ## PID SET-UP
-Kp = 55.0                               # proportional gain
+Kp = 1000.0                               # proportional gain
 Ki =  0.0                               # integral gain
 Kd =  0.0                               # derivative gain
 TARGET = 50                             # degrees
