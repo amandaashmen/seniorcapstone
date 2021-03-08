@@ -217,7 +217,7 @@ def ctrlfunc(starttime, counter):
         
     counter = counter + 1
 
-def endProgram:
+def endProgram():
     """When called, sets DAC output to 0 to turn off peltiers and produces graph of temperatures."""
     dac.normalized_value = 0.0
     dac2.normalized_value = 0.0
