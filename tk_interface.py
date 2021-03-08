@@ -39,16 +39,13 @@ class ARDapp(Tk):
         frame = self.frames[cont]
         frame.tkraise()
         
-    def getAverageTemp(self, hello):
-        self.average.set(5)
-        print(self.average.get())
-        print('testingg')
-        print(hello)
-        print(control.getAverage())
-        self.average.set(control.getAverage()+control.getAverage())
-        return self.average.get()
-
-        
+    def getAverageTemp(self):
+        #self.average.set(5)
+        #print(self.average.get())
+        #print('testingg')
+        #print(hello)
+        #print(control.getAverage())
+        self.average.set(control.getAverage())     
         
 class StartPage(Frame):
 
@@ -193,8 +190,8 @@ class Confirm(Frame):
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get())
             while temp >-1:
-                controller.getAverageTemp('hi')#fix
-                therm_temp2['text'] = controller.average
+                #controller.getAverageTemp()
+                therm_temp2['text'] = controller.getAverageTemp()
                 
                 mins,secs = divmod(temp,60)
 
