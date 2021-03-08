@@ -196,7 +196,7 @@ def ctrlfunc(starttime, counter):
     t2_tempList.append(degrees_f2)
     t2_timeList.append(elapsed_time)        
 
-    if counter == 10:                             # Sample time (1) / Max process time (.1)
+    if counter % 10 == 0:                             # Sample time (1) / Max process time (.1)
             
         # Thermistor 1
         updatePID(degrees_f, pelt_pid, dac, 1)
