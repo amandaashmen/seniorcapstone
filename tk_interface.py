@@ -44,8 +44,8 @@ class ARDapp(Tk):
         #print(self.average.get())
         #print('testingg')
         #print(hello)
-        #print(control.getAverage())
-        self.average.set(round(control.getAverage(), 1))     
+        return control.getAverage()
+        #self.average.set(round(control.getAverage(), 1))     
         
 class StartPage(Frame):
 
@@ -127,7 +127,7 @@ class Custom(Frame):
         def set_variables():
             controller.temperature.set(set_temp.get())
             controller.duration.set(set_dur.get())
-            controller.getAverageTemp()
+            controller.average.set(controller.getAverageTemp)
             controller.show_frame(Confirm)
 
         temp_set = Label(self, text="Set Temperature (F)", font=SMALL_FONT)
