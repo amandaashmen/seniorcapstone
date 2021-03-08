@@ -140,7 +140,7 @@ def graphData(dataList1, timeList1, dataList2, timeList2):
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
     plt.plot(timeList1, dataList1, label='Therm. 1')
-    plt.plot(timeList2, dataList2, label='Therm. 2')
+    plt.plot(timeList1, dataList2, label='Therm. 2')        
     plt.legend()
     plt.savefig(FILENAME+'.png')
     plt.show()
