@@ -159,7 +159,7 @@ class Confirm(Frame):
         second.set("00")
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
-        desired_temp.place(x= 100, y = 140)
+        desired_temp.place(x= 100, y = 110)
 
         timeLabel = Label(self, text="Timer:", fg="navy", font=SMALL_FONT)
         timeLabel.place(x= 100, y = 170)
@@ -179,15 +179,15 @@ class Confirm(Frame):
         def submit():
             ## Need to do these when its time, not upon initial load
             current_temp = Label(self, text="Current Temperature:", fg="navy", font=SMALL_FONT)
-            current_temp.place(x=100,y=110)
+            current_temp.place(x=100,y=140)
 
-            therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
-            therm_temp.place(x= 260, y = 110)
+            therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average)
+            therm_temp.place(x= 280, y = 140)
             control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
             #control.ctrlfunc()                                   # FIX i am not sure if this ill run simultaneously - maybe remove inf loop
             temp = int(controller.duration.get())*60 + int(second.get()) 
             while temp >-1:
-                therm_temp2['text'] = controller.getAverageTemp()
+                therm_temp['text'] = controller.getAverageTemp()
                 
                 mins,secs = divmod(temp,60)
 
