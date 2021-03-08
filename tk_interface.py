@@ -160,7 +160,7 @@ class Confirm(Frame):
         minute.set(controller.duration.get())
         second.set("00")
 
-        current_temp = Label(self, text="Current Temperature: 70"+controller.temperature.get(), fg="navy", font=SMALL_FONT)
+        current_temp = Label(self, text="Current Temperature: 70"+controller.temperature, fg="navy", font=SMALL_FONT)
         current_temp.place(x=100,y=110)
         # FIX instead of 70, make it the avg thermistor readings
         
