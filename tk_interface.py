@@ -169,14 +169,14 @@ class Confirm(Frame):
         therm_temp2 = Label(self, font=SMALL_FONT, textvariable= controller.average) # ()? need to update constantly
         therm_temp2.place(x= 170, y = 110)
 
-        desired_temp = Label(self, text="Desired temperature: "+str(controller.temperature.get()), fg="navy", font=SMALL_FONT)
+        desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
         desired_temp.place(x= 100, y = 140)
 
         timeLabel = Label(self, text="Timer:", fg="navy", font=SMALL_FONT)
         timeLabel.place(x= 100, y = 170)
         
         tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
-        #tempLabel.place(x= 300, y = 140)
+        tempLabel.place(x= 300, y = 140)
 
         minuteLabel= Label(self, font=SMALL_FONT, textvariable= controller.duration)
         minuteLabel.place(x=163,y=170)
