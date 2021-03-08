@@ -217,7 +217,7 @@ class Confirm(Frame):
                 counter += 1
                 
                 if temp == -1:
-                    control.endProgram
+                    control.endProgram()
 
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.place(x=145,y=30)
