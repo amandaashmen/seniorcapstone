@@ -165,7 +165,7 @@ class Confirm(Frame):
         timeLabel.place(x= 100, y = 170)
         
         tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
-        tempLabel.place(x= 300, y = 140)
+        tempLabel.place(x= 300, y = 110)
 
         minuteLabel= Label(self, font=SMALL_FONT, textvariable= controller.duration)
         minuteLabel.place(x=163,y=170)
