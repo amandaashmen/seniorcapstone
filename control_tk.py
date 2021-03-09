@@ -62,7 +62,7 @@ tolerance = 250                         #  being jittery we'll only change volta
 # thermistor 1 and 2 lists
 t1_tempList = []                        # creates an empty list of temperature values read
 t2_tempList = []                   
-t1_timeList = []                        # creates an empty list of time values per temperature
+timeList = []                        # creates an empty list of time values per temperature
 t2_timeList = []                  
 
 
