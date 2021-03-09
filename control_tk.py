@@ -142,22 +142,22 @@ def graphData(dataList1, dataList2, timeList):
 #x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
 #y = np.array([4, 9, 12, 30, 45, 88, 140, 230])
 
-#define x as 200 equally spaced values between the min and max of original x 
-#xnew = np.linspace(x.min(), x.max(), 200) 
+    #define x as 200 equally spaced values between the min and max of original x 
+    xnew = np.linspace(timeList.min(), timeList.max(), len(timeList)*5) 
 
-#define spline
-#spl = make_interp_spline(x, y, k=3)
-#y_smooth = spl(xnew)
+    #define spline
+    spl = make_interp_spline(timeList, dataList1, k=3)
+    y_smooth = spl(xnew)
 
-#create smooth line chart 
-#plt.plot(xnew, y_smooth)
-#plt.show()
+    #create smooth line chart 
+    plt.plot(xnew, y_smooth, label='Therm. 1)
+    #plt.show()
          
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
-    plt.plot(timeList1, dataList1, label='Therm. 1')
-    plt.plot(timeList1, dataList2, label='Therm. 2')        
+    #plt.plot(timeList1, dataList1, label='Therm. 1')
+    plt.plot(timeList, dataList2, label='Therm. 2')        
     plt.legend()
     plt.savefig(FILENAME+'.png')
     plt.show()
