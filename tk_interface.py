@@ -206,7 +206,7 @@ class Confirm(Frame):
 
                 # updating the GUI window after decrementing the temp value every time
                 self.update()
-                time.sleep(1)
+                #time.sleep(1)
 
                 # when temp value = 0; then a messagebox pop's up:"Time's up"
                 if (temp == 0):
