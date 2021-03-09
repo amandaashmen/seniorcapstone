@@ -11,7 +11,7 @@ import adafruit_mcp4725 as DAC
 from matplotlib import pyplot as plt
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-from scipy.interpolate import make_interp_spline, BSpline
+#from scipy.interpolate import make_interp_spline, BSpline
 
 ## SAVING TO FILENAME
 try:
