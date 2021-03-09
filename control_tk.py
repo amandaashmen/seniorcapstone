@@ -150,7 +150,7 @@ def graphData(dataList1, dataList2, timeList):
     y_smooth = spl(xnew)
 
     #create smooth line chart 
-    plt.plot(xnew, y_smooth, label='Therm. 1)
+    plt.plot(xnew, y_smooth, label='Therm. 1')
     #plt.show()
          
     plt.ylabel('Temperature (F)')
