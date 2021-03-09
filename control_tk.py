@@ -130,11 +130,11 @@ def graphData(dataList1, timeList1, dataList2, timeList2):
     #xList2 = []
     #yList2 = []
     #for point in range(len(dataList2)):
-         temp = dataList2[point]
-         time = timeList2[point]
+    temp = dataList2[point]
+    time = timeList2[point]
     
-         xList2.append(time)
-         yList2.append(temp)
+    #xList2.append(time)
+    #yList2.append(temp)
          
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
