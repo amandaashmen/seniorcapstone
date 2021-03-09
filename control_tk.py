@@ -117,19 +117,19 @@ def graphData(dataList1, timeList1, dataList2, timeList2):
     """plots graph of data for two sets of inputs."""
 
     # Thermistor 1
-    xList = []
-    yList = []
-    for point in range(len(dataList1)):
-        temp = dataList1[point]
-        time = timeList1[point]
+    #xList = []
+    #yList = []
+    #for point in range(len(dataList1)):
+    #    temp = dataList1[point]
+    #    time = timeList1[point]
     
-        xList.append(time)
-        yList.append(temp)
+    #    xList.append(time)
+    #    yList.append(temp)
                
     # Thermistor 2
-    xList2 = []
-    yList2 = []
-    for point in range(len(dataList2)):
+    #xList2 = []
+    #yList2 = []
+    #for point in range(len(dataList2)):
          temp = dataList2[point]
          time = timeList2[point]
     
@@ -198,24 +198,24 @@ def ctrlfunc(starttime, counter):
     t2_tempList.append(degrees_f2)
     t2_timeList.append(elapsed_time)        
 
-    if counter % 5 == 0:                             # Sample time (.5) / Max process time (.1)
+    #if counter % 5 == 0:                             # Sample time (.5) / Max process time (.1)
             
-        # Thermistor 1
-        updatePID(degrees_f, pelt_pid, dac, 1)
+    # Thermistor 1
+    updatePID(degrees_f, pelt_pid, dac, 1)
            
-        # Thermistor 2
-        updatePID(degrees_f2, pelt_pid2, dac2, 2)
+    # Thermistor 2
+    updatePID(degrees_f2, pelt_pid2, dac2, 2)
         
-        counter = 0
+    #counter = 0
         
-    endtime = time.time()
-    processTime = endtime - starttime
-    sleeptime = .1 - processTime
-    if sleeptime < 0:
-        sleeptime = 0
-    time.sleep(sleeptime)
+    #endtime = time.time()
+    #processTime = endtime - starttime
+    #sleeptime = .1 - processTime
+    #if sleeptime < 0:
+    #    sleeptime = 0
+    #time.sleep(sleeptime)
         
-    counter = counter + 1
+    #counter = counter + 1
 
 def endProgram():
     """When called, sets DAC output to 0 to turn off peltiers and produces graph of temperatures."""
