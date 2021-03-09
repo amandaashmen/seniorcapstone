@@ -11,6 +11,7 @@ import adafruit_mcp4725 as DAC
 from matplotlib import pyplot as plt
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
+from scipy.interpolate import make_interp_spline, BSpline
 
 ## SAVING TO FILENAME
 try:
@@ -136,7 +137,7 @@ def graphData(dataList1, dataList2, timeList):
     #xList2.append(time)
     #yList2.append(temp)
 
-    #from scipy.interpolate import make_interp_spline, BSpline
+    
 
 #create data
 #x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
