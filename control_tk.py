@@ -143,7 +143,7 @@ def graphData(dataList1, dataList2, timeList):
 #y = np.array([4, 9, 12, 30, 45, 88, 140, 230])
 
     #define x as 200 equally spaced values between the min and max of original x 
-    xnew = np.linspace(timeList.min(), timeList.max(), len(timeList)*5) 
+    xnew = np.linspace(0, timeList[len(timeList)-1], len(timeList)*5) 
 
     #define spline
     spl = make_interp_spline(timeList, dataList1, k=3)
