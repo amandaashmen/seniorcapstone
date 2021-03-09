@@ -113,7 +113,7 @@ def convert_T_to_V(temp):
     """
     return (71-temp)/27     
 
-def graphData(dataList1, timeList1, dataList2, timeList2):
+def graphData(dataList1, dataList2, timeList):
     """plots graph of data for two sets of inputs."""
 
     # Thermistor 1
@@ -130,11 +130,28 @@ def graphData(dataList1, timeList1, dataList2, timeList2):
     #xList2 = []
     #yList2 = []
     #for point in range(len(dataList2)):
-    temp = dataList2[point]
-    time = timeList2[point]
+    #temp = dataList2[point]
+    #time = timeList2[point]
     
     #xList2.append(time)
     #yList2.append(temp)
+
+    #from scipy.interpolate import make_interp_spline, BSpline
+
+#create data
+#x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+#y = np.array([4, 9, 12, 30, 45, 88, 140, 230])
+
+#define x as 200 equally spaced values between the min and max of original x 
+#xnew = np.linspace(x.min(), x.max(), 200) 
+
+#define spline
+#spl = make_interp_spline(x, y, k=3)
+#y_smooth = spl(xnew)
+
+#create smooth line chart 
+#plt.plot(xnew, y_smooth)
+#plt.show()
          
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
@@ -185,18 +202,17 @@ def ctrlfunc(starttime, counter):
     therm2 = chan1.value                             # read the analog pin of the first thermistor
     
     elapsed_time = round(time.time() - start_time, 2)
-        
+    timeList.append(elapsed_time)
+    
     # Thermistor 1
     degrees_f = adc_to_degrees(therm, 1)
     print(degrees_f)                            #remove
     t1_tempList.append(degrees_f)
-    t1_timeList.append(elapsed_time)
 
     # Thermistor 2
     degrees_f2 = adc_to_degrees(therm2, 2)
     print(degrees_f2)                           # remove
-    t2_tempList.append(degrees_f2)
-    t2_timeList.append(elapsed_time)        
+    t2_tempList.append(degrees_f2)    
 
     #if counter % 5 == 0:                             # Sample time (.5) / Max process time (.1)
             
@@ -221,7 +237,7 @@ def endProgram():
     """When called, sets DAC output to 0 to turn off peltiers and produces graph of temperatures."""
     dac.normalized_value = 0.0
     dac2.normalized_value = 0.0
-    graphData(t1_tempList, t1_timeList, t2_tempList, t2_timeList)
+    graphData(t1_tempList, t2_tempList, timeList)
 
 
 
