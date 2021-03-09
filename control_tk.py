@@ -46,9 +46,9 @@ ADC_MAX = 65535
 
 ## PID SET-UP
 Kp = 1000.0                               # proportional gain
-Ki =  0.0                               # integral gain
-Kd =  0.0                               # derivative gain
-SAMPLE_TIME = 1                         # seconds
+Ki =  0.0                                 # integral gain
+Kd =  0.0                                 # derivative gain
+SAMPLE_TIME = .5                          # seconds
 TARGET = 70
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
@@ -198,7 +198,7 @@ def ctrlfunc(starttime, counter):
     t2_tempList.append(degrees_f2)
     t2_timeList.append(elapsed_time)        
 
-    if counter % 10 == 0:                             # Sample time (1) / Max process time (.1)
+    if counter % 5 == 0:                             # Sample time (1) / Max process time (.1)
             
         # Thermistor 1
         updatePID(degrees_f, pelt_pid, dac, 1)
