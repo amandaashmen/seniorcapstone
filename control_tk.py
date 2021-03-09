@@ -45,13 +45,13 @@ chan1 = AnalogIn(mcp, MCP.P1)                                        # create an
 ADC_MAX = 65535
 
 ## PID SET-UP
-Kp = 250.0                               # proportional gain
+Kp = 100.0                               # proportional gain
 Ki =  0.0                                 # integral gain
 Kd =  0.0                                 # derivative gain
 SAMPLE_TIME = .5                          # seconds
 TARGET = 70
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
-pelt_pid2 = PID(500, Ki, Kd, TARGET)     # create PID object for therm. 2
+pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
