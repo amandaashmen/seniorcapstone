@@ -46,8 +46,8 @@ chan1 = AnalogIn(mcp, MCP.P1)                                        # create an
 ADC_MAX = 65535
 
 ## PID SET-UP
-Kp = 100.0                               # proportional gain
-Ki =  0.0                                 # integral gain
+Kp = 28.35                               # proportional gain
+Ki =  1.48                                # integral gain
 Kd =  0.0                                 # derivative gain
 SAMPLE_TIME = .5                          # seconds
 TARGET = 70
@@ -112,7 +112,7 @@ def convert_T_to_V(temp):
     to reach that desired temperature.
     Returns target voltage (Volts)
     """
-    return (71-temp)/27     
+    return (71-temp)/10.4     
 
 def graphData(dataList1, dataList2, timeList):
     """plots graph of data for two sets of inputs."""
@@ -176,7 +176,7 @@ def setTarget(temp):
     Sets the target temperature for the system to approach.
     """
     global TARGET
-    TARGET = int(temp)      # remove if necessary
+    TARGET = int(temp)+1.5      # remove if necessary
     
 def updatePID(current_temp, pelt, dac_no, therm):
     """
