@@ -208,7 +208,7 @@ def ctrlfunc(starttime, counter):
        #global ORIGINAL_DIFF 
        DIFF = time.time() - start_time
         
-    elapsed_time = round(time.time() - start_time - diff, 2)   
+    elapsed_time = round(time.time() - start_time - DIFF, 2)   
     #minutes, seconds = divmod(elapsed_time-start_time, 60)
     #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
     print(elapsed_time)
