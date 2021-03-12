@@ -204,7 +204,7 @@ def ctrlfunc(starttime, counter):
     
     elapsed_time = round(time.time() - start_time, 2)   
     minutes, seconds = divmod(elapsed_time-start_time, 60)
-    timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds)))
+    timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
     
     # Thermistor 1
     degrees_f = adc_to_degrees(therm, 1)
