@@ -53,7 +53,7 @@ SAMPLE_TIME = .5                          # seconds
 TARGET = 70
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
-ORIGINAL_DIFF = 0
+#ORIGINAL_DIFF = 0
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
