@@ -53,7 +53,7 @@ SAMPLE_TIME = .5                          # seconds
 TARGET = 70
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
-#ORIGINAL_DIFF = 0
+ORIGINAL_DIFF = 0
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
@@ -204,7 +204,7 @@ def ctrlfunc(starttime, counter):
     therm2 = chan1.value                             # read the analog pin of the first thermistor
     
     if ORIGINAL_DIFF == 0:
-       global ORIGINAL_DIFF 
+       #global ORIGINAL_DIFF 
        ORIGINAL_DIFF = time.time() - start_time
         
     elapsed_time = round(time.time() - start_time - ORIGINAL_DIFF, 2)   
