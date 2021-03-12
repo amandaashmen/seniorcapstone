@@ -53,7 +53,7 @@ SAMPLE_TIME = .5                          # seconds
 TARGET = 70
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
-ORIGINAL_DIFF = 0
+#ORIGINAL_DIFF = 0
 
 start_time = time.time()                # begin reading
 last_read = 0                           # this keeps track of the last value to keep from
@@ -191,7 +191,7 @@ def updatePID(current_temp, pelt, dac_no, therm):
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0)    # scales output to maximum voltage peltier can handle
     dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
 
-def ctrlfunc(starttime, counter):
+def ctrlfunc(starttime, counter, diff):
     #counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
     pelt_pid.setSetPoint(int(TARGET))
@@ -203,11 +203,11 @@ def ctrlfunc(starttime, counter):
     therm = chan0.value                             # read the analog pin of the first thermistor
     therm2 = chan1.value                             # read the analog pin of the first thermistor
     
-    if ORIGINAL_DIFF == 0:
+    if diff == 0:
        #global ORIGINAL_DIFF 
-       ORIGINAL_DIFF = time.time() - start_time
+        diff = time.time() - start_time
         
-    elapsed_time = round(time.time() - start_time - ORIGINAL_DIFF, 2)   
+    elapsed_time = round(time.time() - start_time - diff, 2)   
     #minutes, seconds = divmod(elapsed_time-start_time, 60)
     #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
     print(elapsed_time)
