@@ -187,7 +187,7 @@ def updatePID(current_temp, pelt, dac_no, therm):
     """
     pelt.update(current_temp)                                           # update pid system with current thermistor temperature
     target_out_temp = pelt.output
-    print(pelt.output)
+    #print(pelt.output)
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0)    # scales output to maximum voltage peltier can handle
     dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
 
@@ -211,16 +211,19 @@ def ctrlfunc(starttime, counter):
     elapsed_time = round(time.time() - start_time - DIFF, 2)   
     #minutes, seconds = divmod(elapsed_time-start_time, 60)
     #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
+    print("Time elapsed")
     print(elapsed_time)
     timeList.append(elapsed_time)
     
     # Thermistor 1
     degrees_f = adc_to_degrees(therm, 1)
+    print("Therm. 1")
     print(degrees_f)                            #remove
     t1_tempList.append(degrees_f)
 
     # Thermistor 2
     degrees_f2 = adc_to_degrees(therm2, 2)
+    print("Therm. 2")
     print(degrees_f2)                           # remove
     t2_tempList.append(degrees_f2)    
 
