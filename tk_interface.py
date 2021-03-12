@@ -183,17 +183,17 @@ class Confirm(Frame):
 
             therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average)
             therm_temp.place(x= 300, y = 140)
-            control.setTarget(controller.temperature.get())            # set the target temperature for the PID system
+            control.setTarget(controller.temperature.get())                                 # set the target temperature for the PID system
             
             counter = 0
             temp = int(controller.duration.get())*60 + int(second.get()) 
             initialized = False
-            while (temp >-1) and (temp != 0):
+            while (temp > 0):
                 if not initialized:
                     startTime = time.time()
                     initialized = True
                     
-                control.ctrlfunc(startTime, counter)                               # controls PID system for peltiers
+                control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
                 
                 therm_temp['text'] = controller.getAverageTemp()
                 
@@ -220,7 +220,7 @@ class Confirm(Frame):
                 temp -= 1
                 counter += 1
                 
-                if temp == -1:
+                if temp == 0:
                     control.endProgram()
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.place(x=145,y=30)
