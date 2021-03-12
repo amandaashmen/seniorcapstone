@@ -188,7 +188,7 @@ class Confirm(Frame):
             counter = 0
             temp = int(controller.duration.get())*60 + int(second.get()) 
             initialized = False
-            while temp >-1:
+            while (temp >-1) and (temp != 0):
                 if not initialized:
                     startTime = time.time()
                     initialized = True
