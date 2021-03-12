@@ -203,8 +203,9 @@ def ctrlfunc(starttime, counter):
     therm2 = chan1.value                             # read the analog pin of the first thermistor
     
     elapsed_time = round(time.time() - start_time, 2)   
-    minutes, seconds = divmod(elapsed_time-start_time, 60)
-    timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
+    #minutes, seconds = divmod(elapsed_time-start_time, 60)
+    #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
+    timeList.append(elapsed_time)
     
     # Thermistor 1
     degrees_f = adc_to_degrees(therm, 1)
