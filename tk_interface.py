@@ -187,13 +187,14 @@ class Confirm(Frame):
             
             counter = 0
             temp = int(controller.duration.get())*60 + int(second.get()) 
-            initialized = False
+            ##initialized = False
             while (temp > 0):
-                if not initialized:
-                    startTime = time.time()
-                    initialized = True
+                ##if not initialized:
+                ##    startTime = time.time()
+                ##    initialized = True
                     
-                control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
+                ##control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
+                control.ctrlfunc(time.time(), counter)
                 
                 therm_temp['text'] = controller.getAverageTemp()
                 
