@@ -203,11 +203,12 @@ def ctrlfunc(starttime, counter):
     therm = chan0.value                             # read the analog pin of the first thermistor
     therm2 = chan1.value                             # read the analog pin of the first thermistor
     
-    global DIFF
-    if DIFF == 0:
+    ##global DIFF
+    ##if DIFF == 0:
        #global ORIGINAL_DIFF 
-       DIFF = time.time() - start_time
-        
+    ##   DIFF = time.time() - start_time
+    
+    DIFF = 0
     elapsed_time = round(time.time() - start_time - DIFF, 2)   
     #minutes, seconds = divmod(elapsed_time-start_time, 60)
     #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
