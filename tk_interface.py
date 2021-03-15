@@ -152,10 +152,10 @@ class Confirm(Frame):
         second.set("00")
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
-        desired_temp.place(x= 100, y = 110)
+        desired_temp.place(x= 200, y = 110)
 
         timeLabel = Label(self, text="Timer:", fg="navy", font=SMALL_FONT)
-        timeLabel.place(x= 100, y = 170)
+        timeLabel.place(x= 200, y = 170)
         
         tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
         tempLabel.place(x= 300, y = 110)
@@ -180,14 +180,14 @@ class Confirm(Frame):
             
             counter = 0
             temp = int(controller.duration.get())*60 + int(second.get()) 
-            ##initialized = False
+            initialized = False
             while (temp > 0):
-                ##if not initialized:
-                ##    startTime = time.time()
-                ##    initialized = True
+                if not initialized:
+                    startTime = time.time()
+                    initialized = True
                     
-                ##control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
-                control.ctrlfunc(time.time(), counter)
+                control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
+                #control.ctrlfunc(time.time(), counter)
                 
                 therm_temp['text'] = controller.getAverageTemp()
                 
