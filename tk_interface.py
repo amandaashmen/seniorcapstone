@@ -236,11 +236,11 @@ class EndPage(Frame):
 
         mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode.pack(side = right)
+        mode.pack(side = RIGHT)
 
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
-        tempLabel.pack(side = left)
+        tempLabel.pack(side = LEFT)
 
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
         durationLabel.place(x= 193, y = 90)
