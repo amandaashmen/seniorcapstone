@@ -236,11 +236,13 @@ class EndPage(Frame):
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
-        tempLabel.pack(side = LEFT, padx = 200)
+        #tempLabel.pack(side = LEFT, padx = 300)
+        tempLabel.grid(column = 0)
         
-        mode = Label(self, text="   F", fg= "navy", font=SMALL_FONT)
+        mode = Label(self, text="F", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode.pack(side = RIGHT, padx=100)
+        #mode.pack(side = RIGHT, padx=200)
+        mode.grid(column = 1)
 
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
