@@ -52,7 +52,7 @@ class StartPage(Frame):
         title2.pack()
 
         startButton = Button(self, text="Start", bg='#8B0000', fg='#ffffff', font='Helvetica 15 bold', borderwidth=3, command=lambda: controller.show_frame(Modes))
-        startButton.pack()
+        startButton.pack(padx = 0, pady = 10)
 
 class Modes(Frame):
 
