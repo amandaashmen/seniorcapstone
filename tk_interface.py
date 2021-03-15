@@ -248,5 +248,5 @@ class EndPage(Frame):
 
 app = ARDapp()
 app.title("ARD Interface")
-app.geometry("500x200")
+app.geometry("500x600")
 app.mainloop()
