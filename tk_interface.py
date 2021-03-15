@@ -240,21 +240,21 @@ class EndPage(Frame):
         
         mode = Label(self, text="   F", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode.pack(side = RIGHT)
+        mode.pack(side = RIGHT, padx=100)
 
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode.pack(side = RIGHT, padx = 200, pady = 50)
+        forLabel.pack(side = RIGHT, padx = 200, pady = 50)
         
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        durationLabel.pack(side = LEFT, padx=200)
+        #durationLabel.pack(side = LEFT, padx=200)
         
         mode2 = Label(self, text="   minutes ", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode2.pack(side = RIGHT, padx = 200)
+        #mode2.pack(side = RIGHT, padx = 200)
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
-        done.place(x=128, y=130)
+        #done.place(x=128, y=130)
 
 app = ARDapp()
 
