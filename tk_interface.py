@@ -232,17 +232,18 @@ class EndPage(Frame):
         Frame.__init__(self, parent)
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
-        label.place(x=70, y=15)
+        #label.place(x=70, y=15)
+        label.grid(row=0)
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
         #tempLabel.pack(side = LEFT, padx = 300)
-        tempLabel.grid(column = 0)
+        tempLabel.grid(column = 0, row=1)
         
         mode = Label(self, text="F", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #mode.pack(side = RIGHT, padx=200)
-        mode.grid(column = 1)
+        mode.grid(column = 1, row=1)
 
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
