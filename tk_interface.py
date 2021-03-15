@@ -252,7 +252,7 @@ app = ARDapp()
 width= window.winfo_screenwidth()  
 height= window.winfo_screenheight() 
 #setting tkinter window size 
-window.geometry("%dx%d" % (width, height)) 
+app.geometry("%dx%d" % (width, height)) 
 app.title("ARD Interface")
 #app.geometry("400x800")
 app.mainloop()
