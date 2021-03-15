@@ -238,17 +238,20 @@ class EndPage(Frame):
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
         #tempLabel.pack(side = LEFT, padx = 300)
-        tempLabel.grid(column = 0, pady = 70, padx= 100)
+        #tempLabel.grid(column = 0, pady = 70, padx= 100)
+        tempLabel.place(x=80, y=50)
         
-        mode = Label(self, text="F", fg= "navy", font=SMALL_FONT)
+        mode = Label(self, text="F for    minutes", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #mode.pack(side = RIGHT, padx=200)
-        mode.grid(column = 1, row=0, pady = 70, padx=100)
-
+        #mode.grid(column = 1, row=0, pady = 70, padx=100)
+        mode.place(x=100, y=50)
+        
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #forLabel.pack(side = RIGHT, padx = 200, pady = 50)
-        forLabel.grid(column = 0, row=1, padx = 100)
+        #forLabel.grid(column = 0, row=1, padx = 100)
+        #forLabel.place(x=120, y=50)
         
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
         #durationLabel.pack(side = LEFT, padx=200)
@@ -256,9 +259,10 @@ class EndPage(Frame):
         mode2 = Label(self, text="   minutes ", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #mode2.pack(side = RIGHT, padx = 200)
-
+        
+        
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
-        #done.place(x=128, y=130)
+        done.place(x=200, y=130)
 
 app = ARDapp()
 
