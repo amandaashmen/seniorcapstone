@@ -249,8 +249,8 @@ class EndPage(Frame):
 app = ARDapp()
 #app.attributes('-fullscreen', True) 
 #getting screen width and height of display 
-width= window.winfo_screenwidth()  
-height= window.winfo_screenheight() 
+width= app.winfo_screenwidth()  
+height= app.winfo_screenheight() 
 #setting tkinter window size 
 app.geometry("%dx%d" % (width, height)) 
 app.title("ARD Interface")
