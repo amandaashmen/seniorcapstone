@@ -233,28 +233,36 @@ class EndPage(Frame):
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
         label.place(x=70, y=15)
-
-        mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
-        #mode.place(x=131,y=90)
-        mode.pack(side = RIGHT, padx = 100)
-
+        
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
-        tempLabel.pack(side = LEFT, padx = 200)
+        tempLabel.pack(side = LEFT, padx = 300)
+        
+        mode = Label(self, text="   F", fg= "navy", font=SMALL_FONT)
+        #mode.place(x=131,y=90)
+        mode.pack(side = RIGHT, padx = 300)
 
+        forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
+        #mode.place(x=131,y=90)
+        mode.pack(side = RIGHT, padx = 300, pady = 50)
+        
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        durationLabel.place(x= 193, y = 90)
+        durationLabel.pack(side = RIGHT, padx=400)
+        
+        mode2 = Label(self, text="   minutes ", fg= "navy", font=SMALL_FONT)
+        #mode.place(x=131,y=90)
+        mode2.pack(side = RIGHT, padx = 300)
 
         done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
         done.place(x=128, y=130)
 
 app = ARDapp()
-#app.attributes('-fullscreen', True) 
+
 #getting screen width and height of display 
 width= app.winfo_screenwidth()  
 height= app.winfo_screenheight() 
 #setting tkinter window size 
 app.geometry("%dx%d" % (width, height)) 
+
 app.title("ARD Interface")
-#app.geometry("400x800")
 app.mainloop()
