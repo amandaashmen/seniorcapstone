@@ -247,6 +247,7 @@ class EndPage(Frame):
         done.place(x=128, y=130)
 
 app = ARDapp()
+app.attributes('-fullscreen', True) 
 app.title("ARD Interface")
-app.geometry("400x800")
+#app.geometry("400x800")
 app.mainloop()
