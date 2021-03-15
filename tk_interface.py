@@ -239,7 +239,7 @@ class EndPage(Frame):
         #tempLabel.place(x= 124, y = 90)
         #tempLabel.pack(side = LEFT, padx = 300)
         #tempLabel.grid(column = 0, pady = 70, padx= 100)
-        tempLabel.place(x=270, y=100)
+        tempLabel.place(x=280, y=100)
         
         mode = Label(self, text="F for    minutes", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
@@ -255,14 +255,14 @@ class EndPage(Frame):
         
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
         #durationLabel.pack(side = LEFT, padx=200)
-        durationLabel.place(x=350,y=100)
+        durationLabel.place(x=360,y=100)
         
         mode2 = Label(self, text="   minutes ", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #mode2.pack(side = RIGHT, padx = 200)
         
         
-        done = Button(self, text="Exit", command=lambda: self.controller.destroy())
+        done = Button(self, text="Exit", command=lambda: ARDapp.destroy())
         done.place(x=350, y=200)
 
 app = ARDapp()
