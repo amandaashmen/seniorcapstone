@@ -49,10 +49,10 @@ class StartPage(Frame):
         title1 = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
         title2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
         title1.pack(pady=23, padx=10)
-        title2.pack(pady=10)
+        title2.pack()
 
         startButton = Button(self, text="Start", bg='#8B0000', fg='#ffffff', font='Helvetica 15 bold', borderwidth=3, command=lambda: controller.show_frame(Modes))
-        startButton.pack(pady=20)
+        startButton.pack()
 
 class Modes(Frame):
 
