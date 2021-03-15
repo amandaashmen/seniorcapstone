@@ -262,7 +262,7 @@ class EndPage(Frame):
         #mode2.pack(side = RIGHT, padx = 200)
         
         
-        done = Button(self, text="Exit", command=lambda: self.destroy())
+        done = Button(self, text="Exit", command=lambda: self.controller.destroy())
         done.place(x=350, y=200)
 
 app = ARDapp()
