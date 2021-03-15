@@ -246,7 +246,8 @@ class EndPage(Frame):
 
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        forLabel.pack(side = RIGHT, padx = 200, pady = 50)
+        #forLabel.pack(side = RIGHT, padx = 200, pady = 50)
+        #forLabel.grid(ro
         
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
         #durationLabel.pack(side = LEFT, padx=200)
