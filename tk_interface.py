@@ -232,20 +232,20 @@ class EndPage(Frame):
         Frame.__init__(self, parent)
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
-        label.place(x=70, y=15)
+        label.place(x=250, y=15)
         #label.grid(row=0)
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
         #tempLabel.pack(side = LEFT, padx = 300)
         #tempLabel.grid(column = 0, pady = 70, padx= 100)
-        tempLabel.place(x=80, y=50)
+        tempLabel.place(x=250, y=50)
         
         mode = Label(self, text="F for    minutes", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
         #mode.pack(side = RIGHT, padx=200)
         #mode.grid(column = 1, row=0, pady = 70, padx=100)
-        mode.place(x=100, y=50)
+        mode.place(x=300, y=50)
         
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
@@ -261,8 +261,8 @@ class EndPage(Frame):
         #mode2.pack(side = RIGHT, padx = 200)
         
         
-        done = Button(self, text="Return to Home", command=lambda: controller.show_frame(StartPage))
-        done.place(x=200, y=130)
+        done = Button(self, text="Exit", command=lambda: self.destroy())
+        done.place(x=300, y=130)
 
 app = ARDapp()
 
