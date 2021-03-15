@@ -40,26 +40,19 @@ class ARDapp(Tk):
         frame.tkraise()
         
     def getAverageTemp(self):
-        #self.average.set(5)
-        #print(self.average.get())
-        #print('testingg')
-        #print(hello)
-        #return control.getAverage()
         self.average.set(round(control.getAverage(), 1))     
         
 class StartPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
-        label2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
-        label.pack(pady=23, padx=10)
-        label2.pack(pady=10)
+        title1 = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
+        title2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
+        title1.pack(pady=23, padx=10)
+        title2.pack(pady=10)
 
-        button = Button(self, text="Start", bg='#8B0000', fg='#ffffff', command=lambda: controller.show_frame(Modes))
-        button.configure(font='Helvetica 15 bold')
-        button.configure(borderwidth=3)
-        button.pack(pady=30)
+        startButton = Button(self, text="Start", bg='#8B0000', fg='#ffffff', font='Helvetica 15 bold', borderwidth=3, command=lambda: controller.show_frame(Modes))
+        startButton.pack(pady=20)
 
 class Modes(Frame):
 
@@ -104,7 +97,7 @@ class Locked(Frame):
         title = Label(self, text="Enter Password", font=LARGE_FONT)
         title.pack(pady=10,padx=10)
 
-        passEntry= Entry(self, width=15, font=("Arial",18,""))
+        passEntry= Entry(self, width=15, font="Arial 18")
         passEntry.pack(pady=10,padx=10)
 
         back = Button(self, text="Back", command=lambda: controller.show_frame(Modes))
@@ -212,17 +205,18 @@ class Confirm(Frame):
                 # updating the GUI window after decrementing the temp value every time
                 self.update()
                 time.sleep(1)
-
-                # when temp value = 0; then a messagebox pop's up:"Time's up"
-                if (temp == 0):
-                    messagebox.showinfo("Time Countdown", "Time's up ")
                 
                 # after every one sec the value of temp will be decremented and counter incremented
                 temp -= 1
                 counter += 1
+                 
+                # when temp value = 0; then a messagebox pop's up:"Time's up"
+                if (temp == 0):
+                    messagebox.showinfo("Time Countdown", "Time's up ")
                 
                 if temp == 0:
                     control.endProgram()
+                    
         title = Label(self, text="Confirm", font=LARGE_FONT)
         title.place(x=145,y=30)
 
