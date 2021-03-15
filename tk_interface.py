@@ -240,7 +240,7 @@ class EndPage(Frame):
         
         mode = Label(self, text="   F", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
-        mode.pack(side = RIGHT, padx = 200)
+        mode.pack(side = RIGHT)
 
         forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
         #mode.place(x=131,y=90)
