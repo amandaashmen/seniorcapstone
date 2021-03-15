@@ -232,8 +232,8 @@ class EndPage(Frame):
         Frame.__init__(self, parent)
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
-        #label.place(x=70, y=15)
-        label.grid(row=0)
+        label.place(x=70, y=15)
+        #label.grid(row=0)
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
         #tempLabel.place(x= 124, y = 90)
