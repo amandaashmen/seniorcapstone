@@ -37,10 +37,6 @@ K1 = 0.000233106
 K2 = 9.32975E-8
 
 ## DAC SET-UP
-#GPIO.setmode(GPIO.BCM)                                              # to use physical board pin numbers
-#channel = 16                                                        # GPIO 16
-#GPIO.setup(channel, GPIO.OUT)                                       # to set up a channel as an output
-#GPIO.output(channel, GPIO.HIGH)                                     # set the output state of a GPIO pin
 i2c = busio.I2C(3, 2)                                                # Initialize I2C bus: 3 = scl pin, 2 = sda pin
 dac = DAC.MCP4725(i2c, address=0x60)                                 # Initialize MCP4725 - DAC
 dac.normalized_value = OUTPUT/MAX_OUTPUT                             # Set pin output to desired voltage value
@@ -111,20 +107,8 @@ def graphData(dataList, timeList):
     plt.show()
 
 while True:
-    # we'll assume that the thermistor didn't move
-    #therm_changed = False
-
     # read the analog pin
     therm = chan0.value
-
-    # how much has it changed since the last read?
-    #therm_adjust = abs(therm - last_read)
-
-    #if therm_adjust > tolerance:
-    #    therm_changed = True
-
-    #if therm_changed:
-        # convert 16bit adc0 (0-65535) thermistor read into 0-VS voltage value
     adc_16bit = 65535
     volts = (therm*VS)/(adc_16bit)
 
@@ -134,14 +118,10 @@ while True:
     tempList.append(degrees_f)
     timeList.append(elapsed_time)
 
-        # print statements to console
+    # print statements to console
     print('Raw ADC Value: ', chan0.value)
     print('Raw Converted Voltage: ', str(volts) + ' Volts')
     print('Time: ', str(elapsed_time) + ' seconds\n')
-
-        # save the thermistor reading for the next loop
-        #last_read = therm
-
 
     # hang out and do nothing for a half second
     time.sleep(0.5)
