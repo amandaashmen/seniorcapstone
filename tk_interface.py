@@ -49,10 +49,10 @@ class StartPage(Frame):
         title1 = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
         title2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
         title1.pack(pady=23, padx=10)
-        title2.pack()
+        title2.pack(pady = 20)
 
         startButton = Button(self, text="Start", bg='#8B0000', fg='#ffffff', font='Helvetica 15 bold', borderwidth=3, command=lambda: controller.show_frame(Modes))
-        startButton.pack(padx = 0, pady = 10)
+        startButton.pack(padx = 0, pady = 20)
 
 class Modes(Frame):
 
@@ -235,10 +235,12 @@ class EndPage(Frame):
         label.place(x=70, y=15)
 
         mode = Label(self, text="   F for     minutes.", fg= "navy", font=SMALL_FONT)
-        mode.place(x=131,y=90)
+        #mode.place(x=131,y=90)
+        mode.pack(side = right)
 
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
-        tempLabel.place(x= 124, y = 90)
+        #tempLabel.place(x= 124, y = 90)
+        tempLabel.pack(side = left)
 
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
         durationLabel.place(x= 193, y = 90)
