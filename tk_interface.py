@@ -187,7 +187,6 @@ class Confirm(Frame):
                     initialized = True
                     
                 control.ctrlfunc(startTime, counter)                                        # controls PID system for peltiers
-                #control.ctrlfunc(time.time(), counter)
                 
                 therm_temp['text'] = controller.getAverageTemp()
                 
@@ -236,32 +235,14 @@ class EndPage(Frame):
         #label.grid(row=0)
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
-        #tempLabel.place(x= 124, y = 90)
-        #tempLabel.pack(side = LEFT, padx = 300)
-        #tempLabel.grid(column = 0, pady = 70, padx= 100)
         tempLabel.place(x=280, y=100)
         
         mode = Label(self, text="F for    minutes", fg= "navy", font=SMALL_FONT)
-        #mode.place(x=131,y=90)
-        #mode.pack(side = RIGHT, padx=200)
-        #mode.grid(column = 1, row=0, pady = 70, padx=100)
         mode.place(x=330, y=100)
-        
-        forLabel = Label(self, text="for", fg= "navy", font=SMALL_FONT)
-        #mode.place(x=131,y=90)
-        #forLabel.pack(side = RIGHT, padx = 200, pady = 50)
-        #forLabel.grid(column = 0, row=1, padx = 100)
-        #forLabel.place(x=120, y=50)
-        
+                
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        #durationLabel.pack(side = LEFT, padx=200)
         durationLabel.place(x=360,y=100)
-        
-        mode2 = Label(self, text="   minutes ", fg= "navy", font=SMALL_FONT)
-        #mode.place(x=131,y=90)
-        #mode2.pack(side = RIGHT, padx = 200)
-        
-        
+                
         done = Button(self, text="Exit", command=lambda: ARDapp.destroy())
         done.place(x=350, y=200)
 
