@@ -11,7 +11,6 @@ import adafruit_mcp4725 as DAC
 from matplotlib import pyplot as plt
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-#from scipy.interpolate import make_interp_spline, BSpline
 
 ## SAVING TO FILENAME
 try:
@@ -46,26 +45,20 @@ chan1 = AnalogIn(mcp, MCP.P1)                                        # create an
 ADC_MAX = 65535
 
 ## PID SET-UP
-Kp = 28.35                               # proportional gain
-Ki =  1.48                                # integral gain
-Kd =  0.0                                 # derivative gain
-SAMPLE_TIME = .5                          # seconds
-TARGET = 70
+Kp = 28.35                              # proportional gain
+Ki =  1.48                              # integral gain
+Kd =  0.0                               # derivative gain
+SAMPLE_TIME = .5                        # seconds
+TARGET = 70                             # Fahrenheit
 pelt_pid = PID(Kp, Ki, Kd, TARGET)      # create PID object for therm. 1
 pelt_pid2 = PID(Kp, Ki, Kd, TARGET)     # create PID object for therm. 2
-DIFF = 0
-
-start_time = time.time()                # begin reading
-last_read = 0                           # this keeps track of the last value to keep from
-tolerance = 250                         #  being jittery we'll only change voltage when the
-                                        #  thermistor has moved a significant amount on a 16-bit ADC
 
 ## GRAPH SET-UP
-# thermistor 1 and 2 lists
+DIFF = 0                                # seconds
+start_time = time.time()                # begin reading
 t1_tempList = []                        # creates an empty list of temperature values read
 t2_tempList = []                   
-timeList = []                        # creates an empty list of time values per temperature
-t2_timeList = []                  
+timeList = []                           # creates an empty list of time values per temperature
 
 
 def adc_voltage(adc_counts):
@@ -116,45 +109,7 @@ def convert_T_to_V(temp):
     return (71-temp)/10.4     
 
 def graphData(dataList1, dataList2, timeList):
-    """plots graph of data for two sets of inputs."""
-
-    # Thermistor 1
-    #xList = []
-    #yList = []
-    #for point in range(len(dataList1)):
-    #    temp = dataList1[point]
-    #    time = timeList1[point]
-    
-    #    xList.append(time)
-    #    yList.append(temp)
-               
-    # Thermistor 2
-    #xList2 = []
-    #yList2 = []
-    #for point in range(len(dataList2)):
-    #temp = dataList2[point]
-    #time = timeList2[point]
-    
-    #xList2.append(time)
-    #yList2.append(temp)
-
-    
-
-#create data
-#x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-#y = np.array([4, 9, 12, 30, 45, 88, 140, 230])
-
-    #define x as 200 equally spaced values between the min and max of original x 
-    ##xnew = np.linspace(0, timeList[len(timeList)-1], len(timeList)*5) 
-
-    #define spline
-    ##spl = make_interp_spline(timeList, dataList1, k=3)
-    ##y_smooth = spl(xnew)
-
-    #create smooth line chart 
-    ##plt.plot(xnew, y_smooth, label='Therm. 1')
-    #plt.show()
-         
+    """plots graph of data for two sets of inputs."""   
     plt.ylabel('Temperature (F)')
     plt.xlabel('Time (s)')
     plt.title('Thermistor Values')
@@ -187,18 +142,14 @@ def updatePID(current_temp, pelt, dac_no, therm):
     """
     pelt.update(current_temp)                                           # update pid system with current thermistor temperature
     target_out_temp = pelt.output
-    #print(pelt.output)
     dac_out = max(min(convert_T_to_V(target_out_temp), MAX_PELT), 0)    # scales output to maximum voltage peltier can handle
     dac_no.normalized_value = dac_out/MAX_DAC                           # set pin output to desired voltage value
 
 def ctrlfunc(starttime, counter):
-    #counter = 0
     pelt_pid.setSampleTime(SAMPLE_TIME)
     pelt_pid.setSetPoint(int(TARGET))
     pelt_pid2.setSampleTime(SAMPLE_TIME)
     pelt_pid2.setSetPoint(int(TARGET))
-
-    #starttime = time.time()
 
     therm = chan0.value                             # read the analog pin of the first thermistor
     therm2 = chan1.value                             # read the analog pin of the first thermistor
@@ -211,7 +162,6 @@ def ctrlfunc(starttime, counter):
     DIFF = 0
     elapsed_time = round(time.time() - start_time - DIFF, 2)   
     minutes, seconds = divmod(elapsed_time-start_time, 60)
-    #timeList.append("{:0>2}:{:05.2f}".format(int(minutes),seconds))
     print("Time elapsed")
     print(elapsed_time)
     timeList.append(elapsed_time)
@@ -227,8 +177,6 @@ def ctrlfunc(starttime, counter):
     print("Therm. 2")
     print(degrees_f2)                           # remove
     t2_tempList.append(degrees_f2)    
-
-    #if counter % 5 == 0:                             # Sample time (.5) / Max process time (.1)
             
     # Thermistor 1
     updatePID(degrees_f, pelt_pid, dac, 1)
@@ -236,22 +184,8 @@ def ctrlfunc(starttime, counter):
     # Thermistor 2
     updatePID(degrees_f2, pelt_pid2, dac2, 2)
         
-    #counter = 0
-        
-    #endtime = time.time()
-    #processTime = endtime - starttime
-    #sleeptime = .1 - processTime
-    #if sleeptime < 0:
-    #    sleeptime = 0
-    #time.sleep(sleeptime)
-        
-    #counter = counter + 1
-
 def endProgram():
     """When called, sets DAC output to 0 to turn off peltiers and produces graph of temperatures."""
     dac.normalized_value = 0.0
     dac2.normalized_value = 0.0
     graphData(t1_tempList, t2_tempList, timeList)
-
-
-
