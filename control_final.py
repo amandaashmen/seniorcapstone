@@ -1,3 +1,9 @@
+############################################################################################
+#
+# Main control algorithm to read thermistor values, calculate output signal
+# needed to approach target value, and drive a voltage signal to peltiers. 
+#
+############################################################################################
 import os
 import sys
 import csv
