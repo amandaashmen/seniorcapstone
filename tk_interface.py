@@ -9,7 +9,7 @@ from tkinter import messagebox
 import control_final as control
 
 LARGE_FONT= "Verdana 18 bold"
-SMALL_FONT= "Verdana 13 italic"
+SMALL_FONT= "Verdana 15 italic"
 PASSWORD = "U"
 
 class ARDapp(Tk):
@@ -45,14 +45,17 @@ class ARDapp(Tk):
         frame.tkraise()
         
     def getAverageTemp(self):
-        self.average.set(round(control.getAverage(), 1))     
+        self.average.set(round(control.getAverage(), 1))
+        
+    def quit(self):
+        self.destroy()
         
 class StartPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         title1 = Label(self, text="Welcome to the \nAthletic Recovery Device", font= "Verdana 20 bold")
-        title2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 15 italic')
+        title2 = Label(self, text="Ready to Recover?", fg="navy", font='Helvetica 17 italic')
         title1.pack(pady=23, padx=10)
         title2.pack(pady = 20)
 
@@ -157,30 +160,30 @@ class Confirm(Frame):
         second.set("00")
 
         desired_temp = Label(self, text="Desired temperature: ", fg="navy", font=SMALL_FONT)
-        desired_temp.place(x= 200, y = 110)
+        desired_temp.place(x= 260, y = 110)
 
         timeLabel = Label(self, text="Timer:", fg="navy", font=SMALL_FONT)
-        timeLabel.place(x= 200, y = 170)
+        timeLabel.place(x= 260, y = 170)
         
         tempLabel = Label(self, font=SMALL_FONT, textvariable= controller.temperature)
-        tempLabel.place(x= 300, y = 110)
+        tempLabel.place(x= 483, y = 110)
 
         minuteLabel= Label(self, font=SMALL_FONT, textvariable= controller.duration)
-        minuteLabel.place(x=163,y=170)
+        minuteLabel.place(x=330,y=170)
 
         colon = Label(self, font=SMALL_FONT, text= ":")
-        colon.place(x=190, y=169)
+        colon.place(x=360, y=169)
         
         secondLabel= Label(self, width=3, font=SMALL_FONT, textvariable=second)
-        secondLabel.place(x=196,y=170)
+        secondLabel.place(x=368,y=170)
 
         def submit():
             ## Need to do these when its time, not upon initial load
             current_temp = Label(self, text="Current Temperature:", fg="navy", font=SMALL_FONT)
-            current_temp.place(x=100,y=140)
+            current_temp.place(x=260,y=140)
 
             therm_temp = Label(self, font=SMALL_FONT, textvariable= controller.average)
-            therm_temp.place(x= 300, y = 140)
+            therm_temp.place(x= 483, y = 140)
             control.setTarget(controller.temperature.get())                                 # set the target temperature for the PID system
             
             counter = 0
@@ -222,13 +225,13 @@ class Confirm(Frame):
                     control.endProgram()
                     
         title = Label(self, text="Confirm", font=LARGE_FONT)
-        title.place(x=145,y=30)
+        title.place(x=330,y=30)
 
         back = Button(self, text="Back to Modes", command=lambda: controller.show_frame(Modes))
-        back.place(x=70, y=250)
+        back.place(x=250, y=250)
 
         begin = Button(self, text="Begin", command=lambda: submit())
-        begin.place(x=250, y=250)
+        begin.place(x=430, y=250)
 
 class EndPage(Frame):
 
@@ -237,19 +240,18 @@ class EndPage(Frame):
 
         label = Label(self, text="Treatment has ended", font=LARGE_FONT)
         label.place(x=250, y=15)
-        #label.grid(row=0)
         
         tempLabel =  Label(self, textvariable=controller.temperature, font=SMALL_FONT)
-        tempLabel.place(x=280, y=100)
+        tempLabel.place(x=300, y=100)
         
-        mode = Label(self, text="F for    minutes", fg= "navy", font=SMALL_FONT)
+        mode = Label(self, text="F for      minutes", fg= "navy", font=SMALL_FONT)
         mode.place(x=330, y=100)
                 
         durationLabel =  Label(self, textvariable=controller.duration, font=SMALL_FONT)
-        durationLabel.place(x=360,y=100)
+        durationLabel.place(x=378,y=100)
                 
-        done = Button(self, text="Exit", command=lambda: ARDapp.destroy())
-        done.place(x=350, y=200)
+        done = Button(self, text="Exit", command=lambda: controller.quit())
+        done.place(x=360, y=200)
 
 app = ARDapp()
 
