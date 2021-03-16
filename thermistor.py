@@ -15,7 +15,7 @@ import board
 import busio
 import adafruit_mcp4725
 
-FILENAME = '2_9test1.csv'
+FILENAME = 'ENTER_FILENAME.csv'
 
 OUTPUT = 2.5        # Volts
 DURATION = 300      # seconds
@@ -123,18 +123,8 @@ while True:
     if therm_adjust > tolerance:
         therm_changed = True
 
-#     therm_total = 0
-#     count = 0
-#     samples = 10
-#     while (count < samples):
-#         therm_total=+ therm
-#         count+=1
-#     therm = therm_total/samples
-
     # convert 16bit adc0 (0-65535) thermistor read into 0-5.2V voltage value
-    #set_voltage = remap_range(therm, 0, 65535, 0, 5.61)
-
-    volts2 = (chan0.value*VS)/(65535) # DO i need both of these -- this ones not good for range 1-5V
+    volts2 = (chan0.value*VS)/(65535)
 
     degrees_f = round(convert_V_to_T(volts2), 2)
     elapsed_time = round(time.time() - start_time, 2)
@@ -144,7 +134,6 @@ while True:
 
     # print statements to console
     print('Raw ADC Value: ', chan0.value)
-    #print('Raw Converted Voltage: ', str(set_voltage) + ' Volts')
     print('Raw Converted Voltage2: ', str(volts2) + ' Volts')
     print('Time: ', str(elapsed_time) + ' seconds')
     print()
