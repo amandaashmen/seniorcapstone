@@ -3,7 +3,6 @@
 # Tkinter GUI for ARD User Interface
 #
 ############################################################################################
-
 import time
 from tkinter import *
 from tkinter import messagebox
